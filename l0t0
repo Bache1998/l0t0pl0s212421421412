@@ -1,0 +1,1202 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Loto Plus</title>
+<style>
+  :root{
+    --navH:64px;
+    --red:#f44336;
+    --bg:#f4f4f6;
+    --card:#ffffff;
+    --text:#333333;
+    --muted:#777777;
+    --danger:#c62828;
+    --ok:#2e7d32;
+    --radius:16px;
+    --pill:999px;
+    --shadow:0 6px 16px rgba(0,0,0,.12);
+  }
+  *{box-sizing:border-box;-webkit-user-select:none;user-select:none;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--text);overflow:hidden}
+  body.dark{
+    --bg:#111111;
+    --card:#1a1a1a;
+    --text:#ffffff;
+    --muted:#bbbbbb;
+    --shadow:0 6px 16px rgba(0,0,0,.9);
+  }
+
+  .app{height:100%;display:flex;flex-direction:column}
+  .content{flex:1;position:relative;padding-bottom:var(--navH)}
+  .tab{position:absolute;inset:0;display:none;overflow:auto;-webkit-overflow-scrolling:touch}
+  .tab.active{display:block}
+
+  .phone{
+    width:100%;
+    max-width:480px;
+    margin:0 auto;
+    min-height:100%;
+    display:flex;
+    flex-direction:column;
+    background:var(--bg);
+  }
+
+  .header{
+    background:var(--red);
+    color:#fff;
+    padding:14px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:sticky;
+    top:0;
+    z-index:10;
+    box-shadow:0 2px 6px rgba(0,0,0,.2);
+  }
+  .header .inner{text-align:center}
+  .header .title{font-size:22px;font-weight:900}
+  .header .sub{font-size:13px;opacity:.95;margin-top:3px}
+  .btn-theme{
+    position:absolute;
+    right:14px;
+    top:50%;
+    transform:translateY(-50%);
+    background:none;
+    border:none;
+    color:#fff;
+    font-size:24px;
+    cursor:pointer;
+    padding:4px;
+  }
+
+  .main{padding:10px 10px 12px;flex:1}
+  .card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:14px 14px 12px;
+    margin-bottom:10px;
+    color:var(--text);
+  }
+  .date{font-size:16px;font-weight:800;text-align:center;margin-bottom:4px}
+  .draw{font-size:13px;text-align:center;color:var(--muted);font-weight:700}
+  .badge{
+    display:inline-flex;align-items:center;justify-content:center;
+    padding:6px 12px;border-radius:999px;font-size:12px;font-weight:800;
+    background:rgba(0,0,0,.06);color:var(--muted);margin:8px auto 0;
+  }
+  body.dark .badge{background:rgba(255,255,255,.06)}
+  .sections{margin-top:10px;display:flex;flex-direction:column;gap:10px}
+  .section{border-radius:16px;overflow:hidden;background:var(--card);border:1px solid rgba(0,0,0,.07)}
+  body.dark .section{border-color:#333}
+  .section-header{
+    background:var(--red);color:#fff;padding:7px 10px;
+    font-size:12px;font-weight:900;text-align:center;text-transform:uppercase;letter-spacing:.4px
+  }
+  .section-body{padding:10px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+  .ball{
+    min-width:36px;padding:7px 0;border-radius:var(--pill);
+    background:#fff;border:1px solid rgba(0,0,0,.1);
+    box-shadow:0 2px 6px rgba(0,0,0,.12);
+    font-size:15px;text-align:center;font-weight:800;color:#333
+  }
+  body.dark .ball{background:#2a2a2a;color:#fff;border-color:rgba(255,255,255,.1);box-shadow:0 2px 6px rgba(0,0,0,.8)}
+  .ball.hit{background:var(--ok)!important;color:#fff!important;border-color:var(--ok)!important}
+  .ball.plus{background:#ffd54f!important;color:#111!important;border-color:#fbc02d!important}
+  .row-center{display:flex;justify-content:center}
+  .label-soft{font-size:12px;font-weight:800;color:var(--muted);text-align:center}
+  .btn-big,.btn-add,.btn-secondary,.btn-danger{
+    width:100%;padding:14px 12px;border:none;border-radius:14px;
+    font-weight:900;font-size:16px;cursor:pointer;box-shadow:var(--shadow)
+  }
+  .btn-big,.btn-add{background:#000;color:#fff}
+  .btn-secondary{background:#e0e0e0;color:#111}
+  body.dark .btn-secondary{background:#333;color:#fff}
+  .btn-danger{background:var(--danger);color:#fff}
+  .btn-row{display:flex;gap:8px;flex-wrap:wrap}
+  .btn-row > *{flex:1}
+
+  .nav{
+    height:var(--navH);position:fixed;left:0;right:0;bottom:0;background:#fff;
+    border-top:1px solid rgba(0,0,0,.12);display:flex;z-index:9999;
+  }
+  .nav button{
+    flex:1;border:0;background:transparent;padding:6px 2px;font-size:12px;color:#666;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer
+  }
+  .nav .ico{font-size:20px;line-height:1}
+  .nav button.active{color:var(--red);font-weight:700}
+
+  .tabla{
+    width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;
+    border-radius:12px;border:1px solid rgba(0,0,0,.10);margin:10px 0 2px
+  }
+  body.dark .tabla{border-color:rgba(255,255,255,.12)}
+  .tabla th{
+    background:rgba(0,0,0,.06);color:var(--text);font-size:12px;padding:10px 8px;
+    text-align:center;font-weight:900;letter-spacing:.3px
+  }
+  body.dark .tabla th{background:rgba(255,255,255,.06)}
+  .tabla td{
+    padding:10px 8px;text-align:center;font-size:13px;font-weight:700;
+    border-top:1px solid rgba(0,0,0,.08)
+  }
+  body.dark .tabla td{border-top:1px solid rgba(255,255,255,.10)}
+
+  .small{font-size:12px;color:var(--muted)}
+  .center{text-align:center}
+  .title2{font-size:18px;font-weight:900;text-align:center;margin:0}
+  .list-item{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:10px;border-radius:12px;background:#fff;border:1px solid #ddd;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:10px;cursor:pointer
+  }
+  body.dark .list-item{background:#202020;border-color:#444;box-shadow:0 2px 6px rgba(0,0,0,.9)}
+  .list-item.win{background:#19f219!important;border-color:#11c711!important}
+  .list-item.lose{background:#ff4b3e!important;border-color:#ef3f31!important}
+  .list-item.win *, .list-item.lose *{color:#111!important}
+  .item-title{font-size:13px;font-weight:900}
+  .item-nums{font-size:17px;font-weight:900;letter-spacing:1px}
+  .item-plus{font-size:12px;font-weight:900;color:var(--muted)}
+  .item-actions{display:flex;align-items:center;gap:8px}
+  .icon-btn{background:none;border:none;font-size:20px;cursor:pointer}
+  .icon-edit{color:#1976d2}
+  .icon-del{color:var(--danger)}
+
+  .screen{display:none}
+  .screen.active{display:block}
+  .select{
+    width:100%;padding:12px;border-radius:12px;border:1px solid #ddd;
+    font-weight:800;background:var(--card);color:var(--text)
+  }
+
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,.45);
+    display:none;align-items:center;justify-content:center;z-index:50
+  }
+  .modal{
+    background:var(--card);border-radius:16px;padding:16px;width:92%;max-width:380px;
+    box-shadow:var(--shadow);color:var(--text)
+  }
+  .modal-title{font-size:17px;font-weight:900;text-align:center;margin-bottom:8px}
+  .modal-buttons{display:flex;gap:8px;margin-top:12px}
+  .btn-modal{flex:1;padding:11px;border:none;border-radius:12px;font-weight:900;cursor:pointer}
+  .btn-cancel{background:#e0e0e0;color:#222}
+  body.dark .btn-cancel{background:#444;color:#fff}
+  .btn-save{background:#000;color:#fff}
+  .input{
+    width:100%;padding:10px;border-radius:12px;border:1px solid #ccc;
+    background:#fff;color:#111;text-align:center;font-size:15px
+  }
+
+  .picker-sheet{
+    width:100%;max-width:480px;height:100vh;background:var(--bg);
+    display:flex;flex-direction:column
+  }
+  .picker-topbar{
+    background:var(--red);color:#fff;padding:14px 14px;display:flex;align-items:center;
+    justify-content:space-between;box-shadow:0 2px 6px rgba(0,0,0,.25)
+  }
+  .picker-title{font-weight:900;font-size:16px}
+  .picker-sub{font-size:12px;opacity:.95;margin-top:2px;font-weight:700}
+  .picker-close{background:none;border:none;color:#fff;font-size:26px;line-height:1;cursor:pointer;padding:2px 6px}
+  .picker-content{padding:12px 10px 14px;flex:1;overflow:auto}
+  .picker-selected-row{
+    background:var(--card);border-radius:14px;box-shadow:var(--shadow);
+    padding:12px;margin-bottom:10px;text-align:center
+  }
+  .picker-selected-title{font-size:13px;font-weight:900;margin-bottom:8px}
+  .picker-selected-balls{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;min-height:40px}
+  .picker-grid{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:10px;margin-bottom:10px}
+  .picker-grid-inner{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+  .picker-grid-plus{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .num-btn{
+    border:none;border-radius:10px;padding:14px 0;font-weight:900;font-size:16px;cursor:pointer;
+    background:#8b8b8b;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.18)
+  }
+  body.dark .num-btn{background:#6c6c6c;box-shadow:0 2px 6px rgba(0,0,0,.9)}
+  .num-btn.selected{background:var(--ok);color:#fff}
+  .num-btn.plus-btn.selected{background:#fbc02d;color:#111}
+  .picker-hint{text-align:center;font-size:12px;color:var(--muted);margin-top:10px;font-weight:700}
+  .picker-actions{padding:10px}
+  .hidden{display:none!important}
+
+  .toast{
+    position:fixed;left:50%;bottom:calc(var(--navH) + 14px);transform:translateX(-50%);
+    background:#000;color:#fff;padding:10px 12px;border-radius:12px;font-size:14px;
+    display:none;z-index:10000;max-width:92%;text-align:center
+  }
+  .toast.show{display:block}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="content">
+    <section id="tab-ultimo" class="tab active">
+      <div class="phone">
+        <header class="header">
+          <div class="inner">
+            <div class="title">Loto Plus</div>
+            <div class="sub" id="sub-ultimo">Último sorteo</div>
+          </div>
+          <button class="btn-theme" type="button" id="btn-theme">🌙</button>
+        </header>
+        <main class="main">
+          <section id="ultimo-screen-main" class="screen active">
+            <section class="card">
+              <div class="date" id="ultimo-fecha"></div>
+              <div class="draw" id="ultimo-nro"></div>
+              <div class="row-center"><div class="badge" id="ultimo-pozo"></div></div>
+
+              <div class="sections" id="ultimo-secciones"></div>
+
+              <div style="margin-top:12px">
+                <button class="btn-big" id="btn-ultimo-detalles">DETALLES</button>
+              </div>
+            </section>
+          </section>
+
+          <section id="ultimo-screen-detalles" class="screen">
+            <section class="card">
+              <div class="date" id="detalle-fecha"></div>
+              <div class="draw" id="detalle-nro"></div>
+              <div id="detalle-tablas"></div>
+              <div class="small center" style="margin-top:10px" id="detalle-nota"></div>
+              <div style="margin-top:12px">
+                <button class="btn-big" id="btn-ultimo-volver">VOLVER</button>
+              </div>
+            </section>
+
+            
+          </section>
+        </main>
+      </div>
+    </section>
+
+    <section id="tab-jugadas" class="tab">
+      <div class="phone">
+        <header class="header">
+          <div class="inner">
+            <div class="title">Loto Plus</div>
+            <div class="sub" id="sub-jugadas">Controlar jugadas</div>
+          </div>
+          <button class="btn-theme" type="button">🌙</button>
+        </header>
+        <main class="main">
+          <section id="jug-screen-main" class="screen active">
+            <section class="card">
+              <h2 class="title2">Mis jugadas</h2>
+              <div id="lista-jugadas" style="margin-top:10px"></div>
+              <button class="btn-danger" id="btn-borrar-todas" style="margin-top:10px">Borrar TODAS las jugadas</button>
+              <button class="btn-add" id="btn-agregar-jugada" style="margin-top:10px">Agregar jugada</button>
+              <button class="btn-secondary" id="btn-ir-ganaste" style="margin-top:10px">¿Ganaste alguna vez?</button>
+              <button class="btn-secondary" id="btn-ir-ultimos" style="margin-top:10px">Últimos 10 sorteos</button>
+            </section>
+          </section>
+
+          <section id="jug-screen-detalle" class="screen">
+            <section class="card">
+              <div class="btn-row" style="align-items:center">
+                <button class="btn-secondary" id="btn-volver-jugadas">← Mis jugadas</button>
+              </div>
+              <h2 class="title2" id="detalle-jugada-titulo" style="margin-top:10px"></h2>
+              <div class="small center" id="detalle-jugada-plus-label" style="margin-top:4px"></div>
+              <div class="section-body" id="detalle-jugada-bolas" style="margin-top:8px"></div>
+              <div id="detalle-jugada-ultimo" style="margin-top:12px"></div>
+            </section>
+          </section>
+
+          <section id="jug-screen-ganaste" class="screen">
+            <section class="card">
+              <button class="btn-secondary" id="btn-volver-ganaste">← Volver</button>
+              <h2 class="title2" style="margin-top:10px">¿Ganaste alguna vez?</h2>
+              <div class="small center" style="margin-top:8px">Escanea el historial cargado en la app.</div>
+              <button class="btn-add" id="btn-ganaste-mis" style="margin-top:12px">Verificar tus jugadas</button>
+              <button class="btn-add" id="btn-ganaste-custom" style="margin-top:10px">Elegir números para verificar</button>
+              <div id="ganaste-pick" class="section-body" style="margin-top:10px"></div>
+              <div class="small center" id="ganaste-plus-label"></div>
+              <div id="ganaste-resultado" style="margin-top:12px"></div>
+            </section>
+          </section>
+
+          <section id="jug-screen-ultimos" class="screen">
+            <section class="card">
+              <button class="btn-secondary" id="btn-volver-ultimos">← Volver</button>
+              <h2 class="title2" style="margin-top:10px">Últimos 10 sorteos</h2>
+              <div style="margin-top:12px">
+                <div class="small" style="font-weight:900;margin-bottom:6px">Elegí una jugada</div>
+                <select id="ultimos-select-jugada" class="select">
+                  <option value="">— Seleccionar —</option>
+                </select>
+                <button class="btn-add" id="btn-ultimos-custom" style="margin-top:10px">Elegir números</button>
+                <div id="ultimos-pick" class="section-body" style="margin-top:10px"></div>
+                <div class="small center" id="ultimos-plus-label"></div>
+              </div>
+
+              <div style="margin-top:14px">
+                <div class="small" style="font-weight:900;margin-bottom:6px">Sorteo</div>
+                <select id="ultimos-select-sorteo" class="select"></select>
+              </div>
+
+              <div id="ultimos-resultado" style="margin-top:14px"></div>
+            </section>
+          </section>
+        </main>
+      </div>
+    </section>
+
+    <section id="tab-wa" class="tab">
+      <div class="phone">
+        <header class="header">
+          <div class="inner">
+            <div class="title">Loto Plus</div>
+            <div class="sub">WhatsApp</div>
+          </div>
+          <button class="btn-theme" type="button">🌙</button>
+        </header>
+        <main class="main">
+          <section class="card">
+            <h2 class="title2">Atención por WhatsApp</h2>
+            <div class="small center" style="margin-top:10px;line-height:1.6">
+              Esta sección quedó lista visualmente para tu flujo de ventas y atención.
+              Cuando quieras, después te la adapto con tu texto real, horarios, precio y botón directo.
+            </div>
+            <button class="btn-add" style="margin-top:14px" onclick="mostrarToast('Después te adapto esta parte con tu texto real de WhatsApp.')">Configurar después</button>
+          </section>
+        </main>
+      </div>
+    </section>
+
+    <section id="tab-ruleta" class="tab">
+      <div class="phone">
+        <header class="header">
+          <div class="inner">
+            <div class="title">Loto Plus</div>
+            <div class="sub">Ruleta</div>
+          </div>
+          <button class="btn-theme" type="button">🌙</button>
+        </header>
+        <main class="main">
+          <section class="card">
+            <h2 class="title2">Generador Loto Plus</h2>
+            <div class="small center" style="margin-top:8px">
+              Genera 6 números distintos del 00 al 45 y un Número Plus del 00 al 09.
+            </div>
+            <div class="section-body" id="ruleta-bolas" style="margin-top:12px"></div>
+            <div class="small center" id="ruleta-plus-label"></div>
+            <button class="btn-add" id="btn-ruleta-generar" style="margin-top:12px">Generar jugada</button>
+            <button class="btn-secondary" id="btn-ruleta-guardar" style="margin-top:10px">Guardar en Mis jugadas</button>
+          </section>
+        </main>
+      </div>
+    </section>
+  </div>
+
+  <nav class="nav" role="navigation" aria-label="Barra inferior">
+    <button class="active" data-tab="ultimo" type="button"><div class="ico">🏠</div><div>Último</div></button>
+    <button data-tab="jugadas" type="button"><div class="ico">✅</div><div>Jugadas</div></button>
+    <button data-tab="wa" type="button"><div class="ico">💬</div><div>WhatsApp</div></button>
+    <button data-tab="ruleta" type="button"><div class="ico">🎡</div><div>Ruleta</div></button>
+  </nav>
+</div>
+
+<div class="modal-overlay" id="modal-name">
+  <div class="modal">
+    <div class="modal-title" id="modal-name-title">Guardar jugada</div>
+    <input class="input" id="input-name" type="text" placeholder="Nombre de la jugada" />
+    <div class="modal-buttons">
+      <button class="btn-modal btn-cancel" id="btn-name-cancel">Cancelar</button>
+      <button class="btn-modal btn-save" id="btn-name-save">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-confirm">
+  <div class="modal">
+    <div class="modal-title" id="confirm-title">Confirmar</div>
+    <div class="small center" id="confirm-text" style="margin-top:8px"></div>
+    <div class="modal-buttons">
+      <button class="btn-modal btn-cancel" id="btn-confirm-cancel">No</button>
+      <button class="btn-modal btn-save" id="btn-confirm-ok">Sí</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-picker">
+  <div class="picker-sheet">
+    <div class="picker-topbar">
+      <div>
+        <div class="picker-title" id="picker-title">Elegí tu jugada</div>
+        <div class="picker-sub">Marcá 6 números y 1 Número Plus</div>
+      </div>
+      <button class="picker-close" id="picker-close" type="button">✕</button>
+    </div>
+    <div class="picker-content">
+      <div class="picker-selected-row">
+        <div class="picker-selected-title" id="picker-count">Seleccionados: 0 / 6</div>
+        <div class="picker-selected-balls" id="picker-selected-balls"></div>
+        <div class="small center" id="picker-plus-view" style="margin-top:8px"></div>
+      </div>
+
+      <div class="picker-grid">
+        <div class="small center" style="font-weight:900;margin-bottom:8px">Números principales</div>
+        <div class="picker-grid-inner" id="picker-grid-main"></div>
+        <div class="picker-hint">Necesitás 6 números distintos</div>
+      </div>
+
+      <div class="picker-grid">
+        <div class="small center" style="font-weight:900;margin-bottom:8px">Número Plus</div>
+        <div class="picker-grid-plus" id="picker-grid-plus"></div>
+        <div class="picker-hint">Elegí un Plus del 00 al 09</div>
+      </div>
+    </div>
+    <div class="picker-actions">
+      <button class="btn-add" id="picker-save">Usar esta jugada</button>
+      <button class="btn-secondary" id="picker-cancel" style="margin-top:10px">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  const STORAGE_THEME = "lotoplus_tema_v1";
+  const STORAGE_JUGADAS = "lotoplus_mis_jugadas_v1";
+
+  const HISTORIAL_COMPLETO = [
+    {
+      fechaTexto:"11/04/2026",
+      numeroSorteo:"3873",
+      pozoAcumuladoTexto:"$ 28.326.000.000",
+      numeroPlus:"05",
+      juegos:[
+        {nombre:"Tradicional", numeros:["12","14","25","39","41","44"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.103.691.773,48"},{aciertos:"5", ganadores:"3", premio:"$ 17.752.640,40"},{aciertos:"4", ganadores:"233", premio:"$ 3.550.528,08"}]},
+        {nombre:"Match", numeros:["07","32","34","38","39","42"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 8.031.511.178,55"},{aciertos:"5", ganadores:"1", premio:"$ 17.752.640,40"},{aciertos:"4", ganadores:"206", premio:"$ 3.550.528,08"}]},
+        {nombre:"Desquite", numeros:["00","11","15","25","34","42"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 222.658.134,40"}]},
+        {nombre:"Sale o Sale", numeros:["06","08","27","32","36","40"], ganadores:[{aciertos:"5", ganadores:"9", premio:"$ 45.726.498,00"}]}
+      ]
+    },
+    {
+      fechaTexto:"08/04/2026",
+      numeroSorteo:"3872",
+      pozoAcumuladoTexto:"$ 27.000.000.000",
+      numeroPlus:"00",
+      juegos:[
+        {nombre:"Tradicional", numeros:["01","08","12","15","27","42"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.032.732.114,71"},{aciertos:"5", ganadores:"9", premio:"$ 13.773.345,30"},{aciertos:"4", ganadores:"437", premio:"$ 2.754.669,06"}]},
+        {nombre:"Match", numeros:["05","11","19","23","39","43"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.960.551.519,78"},{aciertos:"5", ganadores:"11", premio:"$ 13.773.345,30"},{aciertos:"4", ganadores:"503", premio:"$ 2.754.669,06"}]},
+        {nombre:"Desquite", numeros:["08","23","25","33","38","40"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 143.262.712,00"}]},
+        {nombre:"Sale o Sale", numeros:["11","15","17","19","30","34"], ganadores:[{aciertos:"5", ganadores:"6", premio:"$ 35.476.798,50"}]}
+      ]
+    },
+    {
+      fechaTexto:"04/04/2026",
+      numeroSorteo:"3871",
+      pozoAcumuladoTexto:"$ 26.000.000.000",
+      numeroPlus:"08",
+      juegos:[
+        {nombre:"Tradicional", numeros:["01","12","14","15","25","31"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 979.649.735,36"},{aciertos:"5", ganadores:"4", premio:"$ 15.235.654,50"},{aciertos:"4", ganadores:"569", premio:"$ 3.047.130,90"}]},
+        {nombre:"Match", numeros:["06","09","17","26","30","37"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.907.469.140,43"},{aciertos:"5", ganadores:"11", premio:"$ 15.235.654,50"},{aciertos:"4", ganadores:"472", premio:"$ 3.047.130,90"}]},
+        {nombre:"Desquite", numeros:["02","07","14","23","24","44"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 83.869.840,00"}]},
+        {nombre:"Sale o Sale", numeros:["02","17","19","25","32","38"], ganadores:[{aciertos:"6", ganadores:"1", premio:"$ 39.243.352,50"}]}
+      ]
+    },
+    {
+      fechaTexto:"01/04/2026",
+      numeroSorteo:"3870",
+      pozoAcumuladoTexto:"$ 25.000.000.000",
+      numeroPlus:"01",
+      juegos:[
+        {nombre:"Tradicional", numeros:["02","14","17","32","38","45"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 919.605.973,01"},{aciertos:"5", ganadores:"14", premio:"$ 13.794.016,50"},{aciertos:"4", ganadores:"600", premio:"$ 2.758.803,30"}]},
+        {nombre:"Match", numeros:["06","23","26","28","33","44"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.847.425.378,08"},{aciertos:"5", ganadores:"5", premio:"$ 13.794.016,50"},{aciertos:"4", ganadores:"252", premio:"$ 2.758.803,30"}]},
+        {nombre:"Desquite", numeros:["13","21","34","40","42","45"], ganadores:[{aciertos:"6", ganadores:"1", premio:"$ 1.791.192.008,80"}]},
+        {nombre:"Sale o Sale", numeros:["11","22","25","31","34","42"], ganadores:[{aciertos:"5", ganadores:"3", premio:"$ 35.530.042,50"}]}
+      ]
+    },
+    {
+      fechaTexto:"28/03/2026",
+      numeroSorteo:"3869",
+      pozoAcumuladoTexto:"$ 24.000.000.000",
+      numeroPlus:"03",
+      juegos:[
+        {nombre:"Tradicional", numeros:["02","06","07","32","39","44"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 867.435.446,03"},{aciertos:"5", ganadores:"4", premio:"$ 17.546.641,20"},{aciertos:"4", ganadores:"446", premio:"$ 3.509.328,24"}]},
+        {nombre:"Match", numeros:["01","08","20","24","29","39"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.795.254.851,10"},{aciertos:"5", ganadores:"4", premio:"$ 17.546.641,20"},{aciertos:"4", ganadores:"406", premio:"$ 3.509.328,24"}]},
+        {nombre:"Desquite", numeros:["01","05","15","26","35","43"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.732.819.391,20"}]},
+        {nombre:"Sale o Sale", numeros:["17","22","25","29","33","41"], ganadores:[{aciertos:"5", ganadores:"22", premio:"$ 45.195.894,00"}]}
+      ]
+    },
+    {
+      fechaTexto:"25/03/2026",
+      numeroSorteo:"3868",
+      pozoAcumuladoTexto:"$ 23.000.000.000",
+      numeroPlus:"01",
+      juegos:[
+        {nombre:"Tradicional", numeros:["04","20","33","38","43","45"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 796.735.536,03"},{aciertos:"5", ganadores:"2", premio:"$ 12.312.773,55"},{aciertos:"4", ganadores:"129", premio:"$ 2.462.554,71"}]},
+        {nombre:"Match", numeros:["09","16","21","31","40","45"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.724.554.941,10"},{aciertos:"5", ganadores:"4", premio:"$ 12.312.773,55"},{aciertos:"4", ganadores:"217", premio:"$ 2.462.554,71"}]},
+        {nombre:"Desquite", numeros:["02","03","11","15","25","37"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.653.714.596,80"}]},
+        {nombre:"Sale o Sale", numeros:["07","13","17","23","37","44"], ganadores:[{aciertos:"5", ganadores:"19", premio:"$ 31.714.719,75"}]}
+      ]
+    },
+    {
+      fechaTexto:"21/03/2026",
+      numeroSorteo:"3867",
+      pozoAcumuladoTexto:"$ 22.000.000.000",
+      numeroPlus:"08",
+      juegos:[
+        {nombre:"Tradicional", numeros:["03","08","10","27","33","34"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 751.061.334,60"},{aciertos:"5", ganadores:"9", premio:"$ 17.725.732,20"},{aciertos:"4", ganadores:"661", premio:"$ 3.545.146,44"}]},
+        {nombre:"Match", numeros:["00","10","13","37","43","45"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.678.880.739,67"},{aciertos:"5", ganadores:"3", premio:"$ 17.725.732,20"},{aciertos:"4", ganadores:"165", premio:"$ 3.545.146,44"}]},
+        {nombre:"Desquite", numeros:["06","14","16","19","21","23"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.602.610.595,20"}]},
+        {nombre:"Sale o Sale", numeros:["04","07","11","22","39","45"], ganadores:[{aciertos:"5", ganadores:"24", premio:"$ 45.657.189,00"}]}
+      ]
+    },
+    {
+      fechaTexto:"18/03/2026",
+      numeroSorteo:"3866",
+      pozoAcumuladoTexto:"$ 21.000.000.000",
+      numeroPlus:"04",
+      juegos:[
+        {nombre:"Tradicional", numeros:["02","07","20","28","33","34"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 680.196.405,46"},{aciertos:"5", ganadores:"9", premio:"$ 31.619.006,10"},{aciertos:"4", ganadores:"431", premio:"$ 2.744.574,03"}]},
+        {nombre:"Match", numeros:["11","22","31","33","34","43"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.608.015.810,53"},{aciertos:"5", ganadores:"7", premio:"$ 13.722.870,15"},{aciertos:"4", ganadores:"250", premio:"$ 2.744.574,03"}]},
+        {nombre:"Desquite", numeros:["02","03","05","07","38","43"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.523.321.164,00"}]},
+        {nombre:"Sale o Sale", numeros:["01","23","27","29","34","37"], ganadores:[{aciertos:"5", ganadores:"1", premio:"$ 35.346.786,75"}]}
+      ]
+    },
+    {
+      fechaTexto:"14/03/2026",
+      numeroSorteo:"3865",
+      pozoAcumuladoTexto:"$ 20.000.000.000",
+      numeroPlus:"08",
+      juegos:[
+        {nombre:"Tradicional", numeros:["12","28","33","37","38","44"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 628.485.627,05"},{aciertos:"5", ganadores:"0", premio:"$ 17.896.135,95"},{aciertos:"4", ganadores:"234", premio:"$ 3.579.227,19"}]},
+        {nombre:"Match", numeros:["00","01","09","20","24","40"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.556.305.032,12"},{aciertos:"5", ganadores:"6", premio:"$ 17.896.135,95"},{aciertos:"4", ganadores:"267", premio:"$ 3.579.227,19"}]},
+        {nombre:"Desquite", numeros:["02","07","10","26","36","42"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.465.462.950,40"}]},
+        {nombre:"Sale o Sale", numeros:["14","19","25","30","36","41"], ganadores:[{aciertos:"5", ganadores:"13", premio:"$ 46.096.107,75"}]}
+      ]
+    },
+    {
+      fechaTexto:"11/03/2026",
+      numeroSorteo:"3864",
+      pozoAcumuladoTexto:"$ 19.000.000.000",
+      numeroPlus:"09",
+      juegos:[
+        {nombre:"Tradicional", numeros:["14","15","26","34","39","45"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 556.989.501,63"},{aciertos:"5", ganadores:"3", premio:"$ 13.970.300,85"},{aciertos:"4", ganadores:"154", premio:"$ 2.794.060,17"}]},
+        {nombre:"Match", numeros:["00","01","04","08","16","45"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.484.808.906,70"},{aciertos:"5", ganadores:"4", premio:"$ 13.970.300,85"},{aciertos:"4", ganadores:"255", premio:"$ 2.794.060,17"}]},
+        {nombre:"Desquite", numeros:["14","17","21","27","43","44"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.385.467.285,60"}]},
+        {nombre:"Sale o Sale", numeros:["02","07","20","32","39","40"], ganadores:[{aciertos:"5", ganadores:"10", premio:"$ 35.984.108,25"}]}
+      ]
+    }
+  ];
+
+  const ULTIMO_SORTEO = HISTORIAL_COMPLETO[0];
+
+  function fmt2(v){ return String(v).padStart(2,"0"); }
+  function sortNums(arr){ return (arr || []).map(fmt2).sort((a,b)=>Number(a)-Number(b)); }
+  function themeButtons(){ return document.querySelectorAll(".btn-theme"); }
+
+  function aplicarTema(tema){
+    if(tema === "dark"){
+      document.body.classList.add("dark");
+      themeButtons().forEach(b => b.textContent = "☀️");
+    }else{
+      document.body.classList.remove("dark");
+      themeButtons().forEach(b => b.textContent = "🌙");
+    }
+  }
+  function cargarTema(){
+    try{ aplicarTema(localStorage.getItem(STORAGE_THEME) || "light"); }catch(e){ aplicarTema("light"); }
+  }
+  function toggleTema(){
+    const t = document.body.classList.contains("dark") ? "light" : "dark";
+    aplicarTema(t);
+    try{ localStorage.setItem(STORAGE_THEME, t); }catch(e){}
+  }
+
+  function mostrarToast(txt){
+    const t = document.getElementById("toast");
+    t.textContent = txt;
+    t.classList.add("show");
+    clearTimeout(mostrarToast._timer);
+    mostrarToast._timer = setTimeout(()=>t.classList.remove("show"), 2200);
+  }
+  window.mostrarToast = mostrarToast;
+
+  function openTab(tab){
+    document.querySelectorAll(".tab").forEach(el => el.classList.remove("active"));
+    document.getElementById("tab-" + tab).classList.add("active");
+    document.querySelectorAll(".nav button").forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
+  }
+
+  function buildBallsHTML(nums, hitsSet, plus){
+    return (nums || []).map(n => {
+      const v = fmt2(n);
+      const cls = (hitsSet && hitsSet.has(v)) ? "ball hit" : "ball";
+      return '<div class="' + cls + '">' + v + '</div>';
+    }).join("") + (plus ? '<div class="ball plus">' + fmt2(plus) + '</div>' : "");
+  }
+
+  function aciertosPremiados(juego){
+    const vals = [];
+    (juego.ganadores || []).forEach(g => {
+      const raw = String(g.aciertos || "").replace(/[^\d]/g, "");
+      if(raw) vals.push(Number(raw));
+    });
+    return vals;
+  }
+
+  function analizarJugadaEnSorteo(pick, sorteo){
+    const pickSet = new Set((pick.numeros || []).map(fmt2));
+    const plusHit = fmt2(pick.plus) === fmt2(sorteo.numeroPlus);
+    const lines = (sorteo.juegos || []).map(j => {
+      const nums = (j.numeros || []).map(fmt2);
+      const hits = nums.filter(n => pickSet.has(n)).length;
+      const premioBase = aciertosPremiados(j).includes(hits);
+      const premioPlus = (hits === 6 && plusHit);
+      return {
+        nombre:j.nombre,
+        numeros:nums,
+        hits:hits,
+        premioBase:premioBase,
+        premioPlus:premioPlus,
+        ganadores:j.ganadores || []
+      };
+    });
+    return {
+      plusHit,
+      lines,
+      anyPrize: lines.some(l => l.premioBase || l.premioPlus),
+      bestHits: Math.max.apply(null, lines.map(l => l.hits))
+    };
+  }
+
+  function drawTable(ganadores){
+    if(!ganadores || !ganadores.length) return "";
+    return '<table class="tabla"><thead><tr><th>Aciertos</th><th>Ganadores</th><th>Premio</th></tr></thead><tbody>' +
+      ganadores.map(g => '<tr><td>'+g.aciertos+'</td><td>'+g.ganadores+'</td><td>'+g.premio+'</td></tr>').join("") +
+      '</tbody></table>';
+  }
+
+  function renderUltimo(){
+    document.getElementById("ultimo-fecha").textContent = "Sábado 11/04/2026";
+    document.getElementById("ultimo-nro").textContent = "Sorteo N° " + ULTIMO_SORTEO.numeroSorteo;
+    document.getElementById("ultimo-pozo").textContent = ULTIMO_SORTEO.pozoAcumuladoTexto + " • Plus " + ULTIMO_SORTEO.numeroPlus;
+
+    const cont = document.getElementById("ultimo-secciones");
+    cont.innerHTML = "";
+    ULTIMO_SORTEO.juegos.forEach(j => {
+      const sec = document.createElement("div");
+      sec.className = "section";
+      sec.innerHTML =
+        '<div class="section-header">'+ j.nombre +'</div>' +
+        '<div class="section-body">'+ buildBallsHTML(j.numeros) +'</div>';
+      cont.appendChild(sec);
+    });
+  }
+
+  function renderUltimoDetalles(){
+    document.getElementById("detalle-fecha").textContent = "Sábado 11/04/2026";
+    document.getElementById("detalle-nro").textContent = "Sorteo N° " + ULTIMO_SORTEO.numeroSorteo + " • Número Plus " + ULTIMO_SORTEO.numeroPlus;
+    const cont = document.getElementById("detalle-tablas");
+    cont.innerHTML = "";
+    ULTIMO_SORTEO.juegos.forEach(j => {
+      const block = document.createElement("div");
+      block.className = "section";
+      block.style.marginTop = "10px";
+      block.innerHTML =
+        '<div class="section-header">'+ j.nombre +'</div>' +
+        '<div class="section-body">'+ buildBallsHTML(j.numeros, null, null) +'</div>' +
+        drawTable(j.ganadores);
+      cont.appendChild(block);
+    });
+    document.getElementById("detalle-nota").textContent = "Número Plus del sorteo cargado: " + ULTIMO_SORTEO.numeroPlus + ". Si una jugada hace 6 aciertos y además coincide el Plus, la app la marca como premio adicional.";
+  }
+
+  function showUltimoScreen(which){
+    document.querySelectorAll("#tab-ultimo .screen").forEach(s => s.classList.remove("active"));
+    document.getElementById("ultimo-screen-" + which).classList.add("active");
+    document.getElementById("sub-ultimo").textContent = which === "main" ? "Último sorteo" : "Detalles";
+  }
+
+  let jugadas = [];
+  let jugadaTemporal = null;
+  let idxEdicion = -1;
+
+  function cargarJugadas(){
+    try{
+      jugadas = JSON.parse(localStorage.getItem(STORAGE_JUGADAS) || "[]");
+      if(!Array.isArray(jugadas)) jugadas = [];
+    }catch(e){ jugadas = []; }
+  }
+  function guardarJugadas(){
+    try{ localStorage.setItem(STORAGE_JUGADAS, JSON.stringify(jugadas)); }catch(e){}
+  }
+
+  function renderListaJugadas(){
+    const lista = document.getElementById("lista-jugadas");
+    lista.innerHTML = "";
+    if(!jugadas.length){
+      lista.innerHTML = '<div class="small center" style="padding:10px 0">No agregaste jugadas.</div>';
+      llenarSelectJugadas();
+      return;
+    }
+
+    jugadas.forEach((j, i) => {
+      const ana = analizarJugadaEnSorteo(j, ULTIMO_SORTEO);
+      const item = document.createElement("div");
+      item.className = "list-item " + (ana.anyPrize ? "win" : "lose");
+      item.innerHTML =
+        '<div>' +
+          '<div class="item-title">' + escapeHtml(j.nombre || ("Jugada " + (i+1))) + '</div>' +
+          '<div class="item-nums">' + sortNums(j.numeros).join("-") + '</div>' +
+          '<div class="item-plus">Plus ' + fmt2(j.plus) + '</div>' +
+        '</div>' +
+        '<div class="item-actions">' +
+          '<button class="icon-btn icon-edit" data-edit="'+i+'" type="button">✎</button>' +
+          '<button class="icon-btn icon-del" data-del="'+i+'" type="button">✕</button>' +
+        '</div>';
+      item.addEventListener("click", (e) => {
+        if(e.target.closest("[data-edit]") || e.target.closest("[data-del]")) return;
+        abrirDetalleJugada(i);
+      });
+      item.querySelector("[data-edit]").addEventListener("click", (e) => {
+        e.stopPropagation();
+        editarJugada(i);
+      });
+      item.querySelector("[data-del]").addEventListener("click", (e) => {
+        e.stopPropagation();
+        confirmar("¿Eliminar esta jugada?", "Esta acción no se puede deshacer.", () => {
+          jugadas.splice(i,1);
+          guardarJugadas();
+          renderTodoJugadas();
+          mostrarToast("Jugada eliminada");
+        });
+      });
+      lista.appendChild(item);
+    });
+    llenarSelectJugadas();
+  }
+
+  function renderDetalleJugadaUltimo(j){
+    document.getElementById("detalle-jugada-titulo").textContent = j.nombre || "Jugada";
+    document.getElementById("detalle-jugada-plus-label").textContent = "Número Plus: " + fmt2(j.plus);
+    document.getElementById("detalle-jugada-bolas").innerHTML = buildBallsHTML(sortNums(j.numeros), null, j.plus);
+
+    const ana = analizarJugadaEnSorteo(j, ULTIMO_SORTEO);
+    const pickSet = new Set(sortNums(j.numeros));
+    const cont = document.getElementById("detalle-jugada-ultimo");
+    cont.innerHTML =
+      '<div class="card">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px">' +
+          '<div style="font-weight:900;font-size:15px">Último sorteo</div>' +
+          '<div class="small" style="font-weight:900">Sorteo ' + ULTIMO_SORTEO.numeroSorteo + ' • Plus ' + ULTIMO_SORTEO.numeroPlus + '</div>' +
+        '</div>' +
+        '<div style="margin-top:10px;text-align:center;font-weight:900;font-size:16px">' + (ana.anyPrize ? 'Jugada con premio en el último sorteo' : 'Sin premios en el último sorteo') + '</div>' +
+        '<div style="margin-top:8px;text-align:center;font-weight:900">' + (ana.plusHit ? 'Tu Plus coincide con el sorteo ✅' : 'Tu Plus no coincide') + '</div>' +
+        ana.lines.map(l => (
+          '<div class="section" style="margin-top:10px">' +
+            '<div class="section-header">' + l.nombre + ' • ' + l.hits + ' aciertos' + (l.premioPlus ? ' • + PLUS' : '') + '</div>' +
+            '<div class="section-body">' + buildBallsHTML(l.numeros, pickSet) + '</div>' +
+            drawTable(l.ganadores) +
+          '</div>'
+        )).join("") +
+      '</div>';
+  }
+
+  function showJugScreen(which){
+    document.querySelectorAll("#tab-jugadas .screen").forEach(s => s.classList.remove("active"));
+    document.getElementById("jug-screen-" + which).classList.add("active");
+    const map = {main:"Controlar jugadas", detalle:"Detalle", ganaste:"¿Ganaste alguna vez?", ultimos:"Últimos 10 sorteos"};
+    document.getElementById("sub-jugadas").textContent = map[which] || "Controlar jugadas";
+  }
+
+  function abrirDetalleJugada(i){
+    const j = jugadas[i];
+    if(!j) return;
+    renderDetalleJugadaUltimo(j);
+    showJugScreen("detalle");
+  }
+
+  function llenarSelectJugadas(){
+    const sel = document.getElementById("ultimos-select-jugada");
+    const prev = sel.value;
+    sel.innerHTML = '<option value="">— Seleccionar —</option>' +
+      jugadas.map((j,i) => '<option value="'+i+'">'+ escapeHtml(j.nombre || ("Jugada " + (i+1))) +' • Plus '+ fmt2(j.plus) +'</option>').join("");
+    if(jugadas[prev]) sel.value = prev;
+  }
+
+  function renderUltimosSelectSorteos(){
+    const sel = document.getElementById("ultimos-select-sorteo");
+    sel.innerHTML = HISTORIAL_COMPLETO.map((s, i) =>
+      '<option value="'+i+'">'+ escapeHtml(s.fechaTexto) +' • Sorteo '+ s.numeroSorteo + ' • Plus ' + s.numeroPlus +'</option>'
+    ).join("");
+  }
+
+  function getUltimosPickActual(){
+    const idx = document.getElementById("ultimos-select-jugada").value;
+    if(idx !== "" && jugadas[idx]) return jugadas[idx];
+    return window._ultimosCustomPick || null;
+  }
+
+  function renderUltimosResultado(){
+    const pick = getUltimosPickActual();
+    const cont = document.getElementById("ultimos-resultado");
+    if(!pick){
+      cont.innerHTML = '<div class="small center">Elegí una jugada o cargá números.</div>';
+      return;
+    }
+    const sorteo = HISTORIAL_COMPLETO[Number(document.getElementById("ultimos-select-sorteo").value) || 0];
+    const ana = analizarJugadaEnSorteo(pick, sorteo);
+    const pickSet = new Set(sortNums(pick.numeros));
+    cont.innerHTML =
+      '<div class="card">' +
+        '<div class="center" style="font-weight:900;font-size:16px">' + escapeHtml(sorteo.fechaTexto) + ' • Sorteo ' + sorteo.numeroSorteo + '</div>' +
+        '<div class="center" style="margin-top:6px;font-weight:900">Plus del sorteo: ' + sorteo.numeroPlus + ' • Tu Plus: ' + fmt2(pick.plus) + (ana.plusHit ? ' ✅' : '') + '</div>' +
+        ana.lines.map(l => (
+          '<div class="section" style="margin-top:10px">' +
+            '<div class="section-header">' + l.nombre + ' • ' + l.hits + ' aciertos' + (l.premioPlus ? ' • + PLUS' : '') + '</div>' +
+            '<div class="section-body">' + buildBallsHTML(l.numeros, pickSet) + '</div>' +
+            drawTable(l.ganadores) +
+          '</div>'
+        )).join("") +
+      '</div>';
+  }
+
+  function renderGanasteResultadoConPick(pick){
+    const cont = document.getElementById("ganaste-resultado");
+    const hits = [];
+    HISTORIAL_COMPLETO.forEach(s => {
+      const ana = analizarJugadaEnSorteo(pick, s);
+      ana.lines.forEach(l => {
+        if(l.premioBase || l.premioPlus){
+          hits.push({
+            fecha:s.fechaTexto,
+            sorteo:s.numeroSorteo,
+            juego:l.nombre,
+            aciertos:l.hits,
+            plus:l.premioPlus
+          });
+        }
+      });
+    });
+
+    if(!hits.length){
+      cont.innerHTML = '<div class="card"><div class="center" style="font-weight:900">No se detectaron premios en el historial cargado.</div></div>';
+      return;
+    }
+
+    cont.innerHTML = '<div class="card">' +
+      '<div class="center" style="font-weight:900;font-size:16px">Premios detectados</div>' +
+      hits.map(h => (
+        '<div class="section" style="margin-top:10px">' +
+          '<div class="section-header">' + h.fecha + ' • Sorteo ' + h.sorteo + '</div>' +
+          '<div style="padding:12px 10px;text-align:center;font-weight:900;line-height:1.5">' +
+            h.juego + ' • ' + h.aciertos + ' aciertos' + (h.plus ? ' • + PLUS' : '') +
+          '</div>' +
+        '</div>'
+      )).join("") +
+      '</div>';
+  }
+
+  function renderGanasteConMisJugadas(){
+    const cont = document.getElementById("ganaste-resultado");
+    if(!jugadas.length){
+      cont.innerHTML = '<div class="card"><div class="center" style="font-weight:900">No tenés jugadas guardadas.</div></div>';
+      return;
+    }
+    const resumen = [];
+    jugadas.forEach(j => {
+      let count = 0;
+      HISTORIAL_COMPLETO.forEach(s => {
+        if(analizarJugadaEnSorteo(j, s).anyPrize) count++;
+      });
+      if(count > 0) resumen.push({nombre:j.nombre, count, plus:j.plus});
+    });
+    if(!resumen.length){
+      cont.innerHTML = '<div class="card"><div class="center" style="font-weight:900">Tus jugadas no registran premios en el historial cargado.</div></div>';
+      return;
+    }
+    cont.innerHTML = '<div class="card"><div class="center" style="font-weight:900;font-size:16px">Tus jugadas con premios</div>' +
+      resumen.map(r => '<div class="section" style="margin-top:10px"><div class="section-header">'+ escapeHtml(r.nombre) +'</div><div style="padding:12px 10px;text-align:center;font-weight:900">Premios detectados: '+ r.count +' • Plus '+ fmt2(r.plus) +'</div></div>').join("") +
+      '</div>';
+  }
+
+  function renderRuleta(pick){
+    const p = pick || generarJugadaAleatoria();
+    window._ruletaPick = p;
+    document.getElementById("ruleta-bolas").innerHTML = buildBallsHTML(sortNums(p.numeros), null, p.plus);
+    document.getElementById("ruleta-plus-label").textContent = "Número Plus: " + fmt2(p.plus);
+  }
+
+  function generarJugadaAleatoria(){
+    const bag = [];
+    for(let i=0;i<=45;i++) bag.push(fmt2(i));
+    const nums = [];
+    while(nums.length < 6){
+      const idx = Math.floor(Math.random() * bag.length);
+      nums.push(bag.splice(idx,1)[0]);
+    }
+    nums.sort((a,b)=>Number(a)-Number(b));
+    const plus = fmt2(Math.floor(Math.random() * 10));
+    return { numeros: nums, plus: plus };
+  }
+
+  function escapeHtml(str){
+    return String(str || "").replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+  }
+
+  // Picker
+  let pickerMain = [];
+  let pickerPlus = "";
+  let pickerCallback = null;
+
+  function renderPicker(){
+    document.getElementById("picker-count").textContent = "Seleccionados: " + pickerMain.length + " / 6";
+    document.getElementById("picker-selected-balls").innerHTML = pickerMain.map(n => '<div class="ball hit">'+n+'</div>').join("");
+    document.getElementById("picker-plus-view").textContent = pickerPlus ? ("Número Plus: " + pickerPlus) : "Número Plus sin elegir";
+    document.querySelectorAll("#picker-grid-main .num-btn").forEach(btn => {
+      btn.classList.toggle("selected", pickerMain.includes(btn.dataset.n));
+    });
+    document.querySelectorAll("#picker-grid-plus .num-btn").forEach(btn => {
+      btn.classList.toggle("selected", pickerPlus === btn.dataset.n);
+    });
+  }
+  function openPicker(initial, callback){
+    pickerMain = initial && initial.numeros ? sortNums(initial.numeros).slice(0,6) : [];
+    pickerPlus = initial && initial.plus ? fmt2(initial.plus) : "";
+    pickerCallback = callback || null;
+    document.getElementById("modal-picker").style.display = "flex";
+    renderPicker();
+  }
+  function closePicker(){
+    document.getElementById("modal-picker").style.display = "none";
+  }
+  function savePicker(){
+    if(pickerMain.length !== 6){
+      mostrarToast("Elegí 6 números");
+      return;
+    }
+    if(!pickerPlus){
+      mostrarToast("Elegí un Número Plus");
+      return;
+    }
+    closePicker();
+    if(pickerCallback) pickerCallback({numeros:sortNums(pickerMain), plus:pickerPlus});
+  }
+
+  function initPicker(){
+    const main = document.getElementById("picker-grid-main");
+    const plus = document.getElementById("picker-grid-plus");
+    for(let i=0;i<=45;i++){
+      const n = fmt2(i);
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "num-btn";
+      b.dataset.n = n;
+      b.textContent = n;
+      b.addEventListener("click", () => {
+        const idx = pickerMain.indexOf(n);
+        if(idx !== -1) pickerMain.splice(idx,1);
+        else{
+          if(pickerMain.length >= 6){ mostrarToast("Solo 6 números"); return; }
+          pickerMain.push(n);
+          pickerMain.sort((a,b)=>Number(a)-Number(b));
+        }
+        renderPicker();
+      });
+      main.appendChild(b);
+    }
+    for(let i=0;i<=9;i++){
+      const n = fmt2(i);
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "num-btn plus-btn";
+      b.dataset.n = n;
+      b.textContent = n;
+      b.addEventListener("click", () => {
+        pickerPlus = pickerPlus === n ? "" : n;
+        renderPicker();
+      });
+      plus.appendChild(b);
+    }
+  }
+
+  // Modal name
+  function openNameModal(title, defaultValue, onSave){
+    document.getElementById("modal-name-title").textContent = title;
+    const input = document.getElementById("input-name");
+    input.value = defaultValue || "";
+    document.getElementById("modal-name").style.display = "flex";
+    setTimeout(() => { try{ input.focus(); input.select(); }catch(e){} }, 50);
+    openNameModal._cb = onSave;
+  }
+  function closeNameModal(){ document.getElementById("modal-name").style.display = "none"; openNameModal._cb = null; }
+
+  function confirmar(title, text, onOk){
+    document.getElementById("confirm-title").textContent = title;
+    document.getElementById("confirm-text").textContent = text || "";
+    document.getElementById("modal-confirm").style.display = "flex";
+    confirmar._cb = onOk;
+  }
+  function closeConfirm(){ document.getElementById("modal-confirm").style.display = "none"; confirmar._cb = null; }
+
+  function agregarJugadaDesdePick(pick, nombre){
+    jugadas.push({
+      nombre: nombre || ("Jugada " + (jugadas.length + 1)),
+      numeros: sortNums(pick.numeros),
+      plus: fmt2(pick.plus)
+    });
+    guardarJugadas();
+    renderTodoJugadas();
+    mostrarToast("Jugada guardada");
+  }
+
+  function editarJugada(i){
+    const j = jugadas[i];
+    if(!j) return;
+    openPicker(j, (pick) => {
+      idxEdicion = i;
+      jugadaTemporal = pick;
+      openNameModal("Editar jugada", j.nombre || "", (name) => {
+        jugadas[idxEdicion] = { nombre: name || ("Jugada " + (idxEdicion+1)), numeros: sortNums(jugadaTemporal.numeros), plus: fmt2(jugadaTemporal.plus) };
+        guardarJugadas();
+        renderTodoJugadas();
+        mostrarToast("Jugada actualizada");
+      });
+    });
+  }
+
+  function renderTodoJugadas(){
+    renderListaJugadas();
+    renderUltimosSelectSorteos();
+    renderUltimosResultado();
+  }
+
+  function initEventos(){
+    themeButtons().forEach(b => b.addEventListener("click", toggleTema));
+
+    document.querySelectorAll(".nav button").forEach(btn => {
+      btn.addEventListener("click", () => openTab(btn.dataset.tab));
+    });
+
+    document.getElementById("btn-ultimo-detalles").addEventListener("click", () => showUltimoScreen("detalles"));
+    document.getElementById("btn-ultimo-volver").addEventListener("click", () => showUltimoScreen("main"));
+
+    document.getElementById("btn-agregar-jugada").addEventListener("click", () => {
+      openPicker(null, (pick) => {
+        jugadaTemporal = pick;
+        openNameModal("Guardar jugada", "Jugada " + (jugadas.length + 1), (name) => {
+          agregarJugadaDesdePick(jugadaTemporal, name);
+        });
+      });
+    });
+
+    document.getElementById("btn-borrar-todas").addEventListener("click", () => {
+      if(!jugadas.length){ mostrarToast("No hay jugadas"); return; }
+      confirmar("¿Borrar TODAS las jugadas?", "Se eliminarán todas tus jugadas guardadas.", () => {
+        jugadas = [];
+        guardarJugadas();
+        renderTodoJugadas();
+        showJugScreen("main");
+        mostrarToast("Se borraron todas");
+      });
+    });
+
+    document.getElementById("btn-volver-jugadas").addEventListener("click", () => showJugScreen("main"));
+    document.getElementById("btn-ir-ganaste").addEventListener("click", () => {
+      showJugScreen("ganaste");
+      document.getElementById("ganaste-pick").innerHTML = "";
+      document.getElementById("ganaste-plus-label").textContent = "";
+      document.getElementById("ganaste-resultado").innerHTML = '<div class="small center">Elegí cómo querés verificar.</div>';
+    });
+    document.getElementById("btn-ir-ultimos").addEventListener("click", () => {
+      showJugScreen("ultimos");
+      renderUltimosResultado();
+    });
+
+    document.getElementById("btn-volver-ganaste").addEventListener("click", () => showJugScreen("main"));
+    document.getElementById("btn-volver-ultimos").addEventListener("click", () => showJugScreen("main"));
+
+    document.getElementById("btn-ganaste-mis").addEventListener("click", renderGanasteConMisJugadas);
+    document.getElementById("btn-ganaste-custom").addEventListener("click", () => {
+      openPicker(window._ganasteCustomPick || null, (pick) => {
+        window._ganasteCustomPick = pick;
+        document.getElementById("ganaste-pick").innerHTML = buildBallsHTML(sortNums(pick.numeros), null, pick.plus);
+        document.getElementById("ganaste-plus-label").textContent = "Número Plus: " + fmt2(pick.plus);
+        renderGanasteResultadoConPick(pick);
+      });
+    });
+
+    document.getElementById("ultimos-select-jugada").addEventListener("change", () => {
+      if(document.getElementById("ultimos-select-jugada").value !== ""){
+        window._ultimosCustomPick = null;
+        document.getElementById("ultimos-pick").innerHTML = "";
+        document.getElementById("ultimos-plus-label").textContent = "";
+      }
+      renderUltimosResultado();
+    });
+    document.getElementById("ultimos-select-sorteo").addEventListener("change", renderUltimosResultado);
+    document.getElementById("btn-ultimos-custom").addEventListener("click", () => {
+      openPicker(window._ultimosCustomPick || null, (pick) => {
+        window._ultimosCustomPick = pick;
+        document.getElementById("ultimos-select-jugada").value = "";
+        document.getElementById("ultimos-pick").innerHTML = buildBallsHTML(sortNums(pick.numeros), null, pick.plus);
+        document.getElementById("ultimos-plus-label").textContent = "Número Plus: " + fmt2(pick.plus);
+        renderUltimosResultado();
+      });
+    });
+
+    document.getElementById("btn-ruleta-generar").addEventListener("click", () => {
+      renderRuleta(generarJugadaAleatoria());
+    });
+    document.getElementById("btn-ruleta-guardar").addEventListener("click", () => {
+      const p = window._ruletaPick || generarJugadaAleatoria();
+      jugadaTemporal = p;
+      openNameModal("Guardar jugada", "Ruleta " + (jugadas.length + 1), (name) => {
+        agregarJugadaDesdePick(jugadaTemporal, name);
+      });
+    });
+
+    document.getElementById("btn-name-cancel").addEventListener("click", closeNameModal);
+    document.getElementById("btn-name-save").addEventListener("click", () => {
+      const value = document.getElementById("input-name").value.trim();
+      if(openNameModal._cb) openNameModal._cb(value);
+      closeNameModal();
+    });
+
+    document.getElementById("btn-confirm-cancel").addEventListener("click", closeConfirm);
+    document.getElementById("btn-confirm-ok").addEventListener("click", () => {
+      const cb = confirmar._cb;
+      closeConfirm();
+      if(cb) cb();
+    });
+
+    document.getElementById("picker-close").addEventListener("click", closePicker);
+    document.getElementById("picker-cancel").addEventListener("click", closePicker);
+    document.getElementById("picker-save").addEventListener("click", savePicker);
+  }
+
+  function init(){
+    cargarTema();
+    initPicker();
+    initEventos();
+    cargarJugadas();
+    renderUltimo();
+    renderUltimoDetalles();
+    renderListaJugadas();
+    renderUltimosSelectSorteos();
+    renderRuleta(generarJugadaAleatoria());
+    renderUltimosResultado();
+    showUltimoScreen("main");
+    showJugScreen("main");
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
