@@ -472,6 +472,18 @@
   const STORAGE_JUGADAS = "lotoplus_mis_jugadas_v1";
 
   const HISTORIAL_COMPLETO = [
+{
+  fechaTexto:"15/04/2026",
+  numeroSorteo:"3874",
+  pozoAcumuladoTexto:"$ 28.828.000.000",
+  numeroPlus:"04",
+  juegos:[
+    {nombre:"Tradicional", numeros:["10","21","23","24","26","30"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.154.743.112,39"},{aciertos:"5", ganadores:"13", premio:"$ 1.042.795,56"},{aciertos:"4", ganadores:"323", premio:"$ 8.394,02"}]},
+    {nombre:"Match", numeros:["02","03","06","13","16","38"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 8.082.562.517,46"},{aciertos:"5", ganadores:"9", premio:"$ 1.506.260,25"},{aciertos:"4", ganadores:"373", premio:"$ 7.268,82"}]},
+    {nombre:"Desquite", numeros:["02","05","09","20","30","44"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 279.778.513,60"}]},
+    {nombre:"Sale o Sale", numeros:["01","05","13","33","38","42"], ganadores:[{aciertos:"5", ganadores:"7", premio:"$ 4.988.264,46"}]}
+  ]
+},
     {
       fechaTexto:"11/04/2026",
       numeroSorteo:"3873",
@@ -683,7 +695,7 @@
   }
 
   function renderUltimo(){
-    document.getElementById("ultimo-fecha").textContent = "Sábado 11/04/2026";
+    document.getElementById("ultimo-fecha").textContent = ULTIMO_SORTEO.fechaTexto;
     document.getElementById("ultimo-nro").textContent = "Sorteo N° " + ULTIMO_SORTEO.numeroSorteo;
     document.getElementById("ultimo-pozo").textContent = ULTIMO_SORTEO.pozoAcumuladoTexto + " • Plus " + ULTIMO_SORTEO.numeroPlus;
 
@@ -700,7 +712,7 @@
   }
 
   function renderUltimoDetalles(){
-    document.getElementById("detalle-fecha").textContent = "Sábado 11/04/2026";
+    document.getElementById("detalle-fecha").textContent = ULTIMO_SORTEO.fechaTexto;
     document.getElementById("detalle-nro").textContent = "Sorteo N° " + ULTIMO_SORTEO.numeroSorteo + " • Número Plus " + ULTIMO_SORTEO.numeroPlus;
     const cont = document.getElementById("detalle-tablas");
     cont.innerHTML = "";
@@ -731,10 +743,25 @@
     try{
       jugadas = JSON.parse(localStorage.getItem(STORAGE_JUGADAS) || "[]");
       if(!Array.isArray(jugadas)) jugadas = [];
+      jugadas = jugadas.map((j, i) => normalizarJugada(j, i));
     }catch(e){ jugadas = []; }
   }
   function guardarJugadas(){
     try{ localStorage.setItem(STORAGE_JUGADAS, JSON.stringify(jugadas)); }catch(e){}
+  }
+
+  function fechaActualTexto(){
+    const f = new Date();
+    return fmt2(f.getDate()) + "/" + fmt2(f.getMonth() + 1) + "/" + f.getFullYear();
+  }
+
+  function normalizarJugada(j, i){
+    return {
+      nombre: j && j.nombre ? j.nombre : ("Jugada " + (i + 1)),
+      numeros: sortNums((j && j.numeros) || []),
+      plus: fmt2((j && j.plus) || "00"),
+      fecha: j && j.fecha ? String(j.fecha) : ""
+    };
   }
 
   function renderListaJugadas(){
@@ -750,13 +777,16 @@
       const ana = analizarJugadaEnSorteo(j, ULTIMO_SORTEO);
       const item = document.createElement("div");
       item.className = "list-item " + (ana.anyPrize ? "win" : "lose");
+      const titulo = escapeHtml(j.nombre || ("Jugada " + (i+1)));
+      const fecha = j.fecha ? " (" + escapeHtml(j.fecha) + ")" : "";
       item.innerHTML =
         '<div>' +
-          '<div class="item-title">' + escapeHtml(j.nombre || ("Jugada " + (i+1))) + '</div>' +
+          '<div class="item-title">' + titulo + fecha + '</div>' +
           '<div class="item-nums">' + sortNums(j.numeros).join("-") + '</div>' +
           '<div class="item-plus">Plus ' + fmt2(j.plus) + '</div>' +
         '</div>' +
         '<div class="item-actions">' +
+          '<span class="item-plus" style="font-size:14px;font-weight:900;color:#111">Detalles</span>' +
           '<button class="icon-btn icon-edit" data-edit="'+i+'" type="button">✎</button>' +
           '<button class="icon-btn icon-del" data-del="'+i+'" type="button">✕</button>' +
         '</div>';
@@ -802,7 +832,6 @@
           '<div class="section" style="margin-top:10px">' +
             '<div class="section-header">' + l.nombre + ' • ' + l.hits + ' aciertos' + (l.premioPlus ? ' • + PLUS' : '') + '</div>' +
             '<div class="section-body">' + buildBallsHTML(l.numeros, pickSet) + '</div>' +
-            drawTable(l.ganadores) +
           '</div>'
         )).join("") +
       '</div>';
@@ -832,7 +861,7 @@
 
   function renderUltimosSelectSorteos(){
     const sel = document.getElementById("ultimos-select-sorteo");
-    sel.innerHTML = HISTORIAL_COMPLETO.map((s, i) =>
+    sel.innerHTML = HISTORIAL_COMPLETO.slice(0,10).map((s, i) =>
       '<option value="'+i+'">'+ escapeHtml(s.fechaTexto) +' • Sorteo '+ s.numeroSorteo + ' • Plus ' + s.numeroPlus +'</option>'
     ).join("");
   }
@@ -850,7 +879,8 @@
       cont.innerHTML = '<div class="small center">Elegí una jugada o cargá números.</div>';
       return;
     }
-    const sorteo = HISTORIAL_COMPLETO[Number(document.getElementById("ultimos-select-sorteo").value) || 0];
+    const lista = HISTORIAL_COMPLETO.slice(0,10);
+    const sorteo = lista[Number(document.getElementById("ultimos-select-sorteo").value) || 0];
     const ana = analizarJugadaEnSorteo(pick, sorteo);
     const pickSet = new Set(sortNums(pick.numeros));
     cont.innerHTML =
@@ -861,7 +891,6 @@
           '<div class="section" style="margin-top:10px">' +
             '<div class="section-header">' + l.nombre + ' • ' + l.hits + ' aciertos' + (l.premioPlus ? ' • + PLUS' : '') + '</div>' +
             '<div class="section-body">' + buildBallsHTML(l.numeros, pickSet) + '</div>' +
-            drawTable(l.ganadores) +
           '</div>'
         )).join("") +
       '</div>';
@@ -1049,7 +1078,8 @@
     jugadas.push({
       nombre: nombre || ("Jugada " + (jugadas.length + 1)),
       numeros: sortNums(pick.numeros),
-      plus: fmt2(pick.plus)
+      plus: fmt2(pick.plus),
+      fecha: fechaActualTexto()
     });
     guardarJugadas();
     renderTodoJugadas();
@@ -1063,7 +1093,12 @@
       idxEdicion = i;
       jugadaTemporal = pick;
       openNameModal("Editar jugada", j.nombre || "", (name) => {
-        jugadas[idxEdicion] = { nombre: name || ("Jugada " + (idxEdicion+1)), numeros: sortNums(jugadaTemporal.numeros), plus: fmt2(jugadaTemporal.plus) };
+        jugadas[idxEdicion] = {
+          nombre: name || ("Jugada " + (idxEdicion+1)),
+          numeros: sortNums(jugadaTemporal.numeros),
+          plus: fmt2(jugadaTemporal.plus),
+          fecha: jugadas[idxEdicion] && jugadas[idxEdicion].fecha ? jugadas[idxEdicion].fecha : fechaActualTexto()
+        };
         guardarJugadas();
         renderTodoJugadas();
         mostrarToast("Jugada actualizada");
