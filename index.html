@@ -157,8 +157,11 @@
   }
   body.dark .list-item{background:#202020;border-color:#444;box-shadow:0 2px 6px rgba(0,0,0,.9)}
   .list-item.win{background:#19f219!important;border-color:#11c711!important}
+  .list-item.pending{background:#ffd54f!important;border-color:#fbc02d!important}
   .list-item.lose{background:#ff4b3e!important;border-color:#ef3f31!important}
-  .list-item.win *, .list-item.lose *{color:#111!important}
+  .list-item.win *, .list-item.pending *, .list-item.lose *{color:#111!important}
+  .section-header.consulta{background:#fbc02d!important;color:#111!important}
+  .ball.consulta{background:#ffd54f!important;color:#111!important;border-color:#fbc02d!important}
   .item-title{font-size:13px;font-weight:900}
   .item-nums{font-size:17px;font-weight:900;letter-spacing:1px}
   .item-plus{font-size:12px;font-weight:900;color:var(--muted)}
@@ -294,7 +297,6 @@
               <div id="lista-jugadas" style="margin-top:10px"></div>
               <button class="btn-danger" id="btn-borrar-todas" style="margin-top:10px">Borrar TODAS las jugadas</button>
               <button class="btn-add" id="btn-agregar-jugada" style="margin-top:10px">Agregar jugada</button>
-              <button class="btn-secondary" id="btn-ir-ganaste" style="margin-top:10px">¿Ganaste alguna vez?</button>
               <button class="btn-secondary" id="btn-ir-ultimos" style="margin-top:10px">Últimos 10 sorteos</button>
             </section>
           </section>
@@ -308,19 +310,6 @@
               <div class="small center" id="detalle-jugada-plus-label" style="margin-top:4px"></div>
               <div class="section-body" id="detalle-jugada-bolas" style="margin-top:8px"></div>
               <div id="detalle-jugada-ultimo" style="margin-top:12px"></div>
-            </section>
-          </section>
-
-          <section id="jug-screen-ganaste" class="screen">
-            <section class="card">
-              <button class="btn-secondary" id="btn-volver-ganaste">← Volver</button>
-              <h2 class="title2" style="margin-top:10px">¿Ganaste alguna vez?</h2>
-              <div class="small center" style="margin-top:8px">Escanea el historial cargado en la app.</div>
-              <button class="btn-add" id="btn-ganaste-mis" style="margin-top:12px">Verificar tus jugadas</button>
-              <button class="btn-add" id="btn-ganaste-custom" style="margin-top:10px">Elegir números para verificar</button>
-              <div id="ganaste-pick" class="section-body" style="margin-top:10px"></div>
-              <div class="small center" id="ganaste-plus-label"></div>
-              <div id="ganaste-resultado" style="margin-top:12px"></div>
             </section>
           </section>
 
@@ -437,6 +426,21 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="modal-editar">
+  <div class="modal">
+    <div class="modal-title">Editar jugada</div>
+    <div class="small center" style="margin-bottom:8px">Podés cambiar el nombre, los números y el Plus.</div>
+    <input class="input" id="input-editar-nombre" type="text" placeholder="Nombre de la jugada" />
+    <div class="small center" style="font-weight:900;margin-top:10px">Jugada seleccionada</div>
+    <div class="section-body" id="editar-preview" style="margin-top:6px"></div>
+    <button class="btn-add" id="btn-editar-cambiar" style="margin-top:10px">Cambiar números</button>
+    <div class="modal-buttons">
+      <button class="btn-modal btn-cancel" id="btn-editar-cancelar">Cancelar</button>
+      <button class="btn-modal btn-save" id="btn-editar-guardar">Actualizar jugada</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modal-confirm">
   <div class="modal">
     <div class="modal-title" id="confirm-title">Confirmar</div>
@@ -477,7 +481,7 @@
       </div>
     </div>
     <div class="picker-actions">
-      <button class="btn-add" id="picker-save">Usar esta jugada</button>
+      <button class="btn-add" id="picker-save">Actualizar jugada</button>
       <button class="btn-secondary" id="picker-cancel" style="margin-top:10px">Cerrar</button>
     </div>
   </div>
@@ -499,10 +503,10 @@
   pozoAcumuladoTexto:"$ 32.275.000.000",
   numeroPlus:"06",
   juegos:[
-    {nombre:"Tradicional", numeros:["02","20","23","27","38","41"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.519.432.168,57"},{aciertos:"5", ganadores:"Vacante", premio:"$ 30.903.577,65"},{aciertos:"4", ganadores:"Vacante", premio:"$ 2.788.990,38"}]},
-    {nombre:"Match", numeros:["03","05","18","28","33","36"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 8.447.251.573,64"},{aciertos:"5", ganadores:"Vacante", premio:"$ 13.944.951,90"},{aciertos:"4", ganadores:"Vacante", premio:"$ 2.788.990,38"}]},
+    {nombre:"Tradicional", numeros:["02","20","23","27","38","41"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.519.432.168,57"},{aciertos:"5", ganadores:"5", premio:"$ 30.903.577,65"},{aciertos:"4", ganadores:"302", premio:"$ 2.788.990,38"}]},
+    {nombre:"Match", numeros:["03","05","18","28","33","36"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 8.447.251.573,64"},{aciertos:"5", ganadores:"12", premio:"$ 13.944.951,90"},{aciertos:"4", ganadores:"639", premio:"$ 2.788.990,38"}]},
     {nombre:"Desquite", numeros:["07","27","28","34","37","45"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 687.822.212,80"}]},
-    {nombre:"Sale o Sale", numeros:["01","04","09","11","17","27"], ganadores:[{aciertos:"5", ganadores:"Vacante", premio:"$ 0"}]}
+    {nombre:"Sale o Sale", numeros:["01","04","09","11","17","27"], ganadores:[{aciertos:"5", ganadores:"18", premio:"$ 35.918.815,50"}]}
   ]
 },
 {
@@ -732,10 +736,28 @@
   }
   window.mostrarToast = mostrarToast;
 
+  let pickerSuspendidoPorCambioTab = false;
+
   function openTab(tab){
+    const modalPicker = document.getElementById("modal-picker");
+    const tabActual = document.querySelector(".tab.active");
+    const actualEsJugadas = !!(tabActual && tabActual.id === "tab-jugadas");
+    const pickerAbierto = !!(modalPicker && modalPicker.style.display === "flex");
+
+    if(actualEsJugadas && pickerAbierto && tab !== "jugadas"){
+      pickerSuspendidoPorCambioTab = true;
+      modalPicker.style.display = "none";
+    }
+
     document.querySelectorAll(".tab").forEach(el => el.classList.remove("active"));
     document.getElementById("tab-" + tab).classList.add("active");
     document.querySelectorAll(".nav button").forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
+
+    if(tab === "jugadas" && pickerSuspendidoPorCambioTab && modalPicker){
+      modalPicker.style.display = "flex";
+      pickerSuspendidoPorCambioTab = false;
+      renderPicker();
+    }
   }
 
   function buildBallsHTML(nums, hitsSet, plus){
@@ -746,13 +768,36 @@
     }).join("") + (plus ? '<div class="ball plus">' + fmt2(plus) + '</div>' : "");
   }
 
-  function aciertosPremiados(juego){
+  function nombreJuegoNormalizado(nombre){
+    return String(nombre || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+  }
+
+  function estadoPremioLinea(juego, hits){
+    const n = nombreJuegoNormalizado(juego && juego.nombre);
+
+    if(n.includes("sale o sale")){
+      if(hits >= 6) return "confirmado";
+      if(hits === 5) return "consulta";
+      return "none";
+    }
+
+    if(n.includes("desquite")){
+      return hits === 6 ? "confirmado" : "none";
+    }
+
+    if(n.includes("tradicional") || n.includes("match")){
+      return hits >= 4 ? "confirmado" : "none";
+    }
+
     const vals = [];
-    (juego.ganadores || []).forEach(g => {
+    ((juego && juego.ganadores) || []).forEach(g => {
       const raw = String(g.aciertos || "").replace(/[^\d]/g, "");
       if(raw) vals.push(Number(raw));
     });
-    return vals;
+    return vals.includes(hits) ? "confirmado" : "none";
   }
 
   function analizarJugadaEnSorteo(pick, sorteo){
@@ -761,13 +806,17 @@
     const lines = (sorteo.juegos || []).map(j => {
       const nums = (j.numeros || []).map(fmt2);
       const hits = nums.filter(n => pickSet.has(n)).length;
-      const premioBase = aciertosPremiados(j).includes(hits);
+      const estadoPremio = estadoPremioLinea(j, hits);
+      const premioBase = estadoPremio === "confirmado";
+      const premioConsulta = estadoPremio === "consulta";
       const premioPlus = (hits === 6 && plusHit);
       return {
         nombre:j.nombre,
         numeros:nums,
         hits:hits,
+        estadoPremio:estadoPremio,
         premioBase:premioBase,
+        premioConsulta:premioConsulta,
         premioPlus:premioPlus,
         ganadores:j.ganadores || []
       };
@@ -775,9 +824,21 @@
     return {
       plusHit,
       lines,
-      anyPrize: lines.some(l => l.premioBase || l.premioPlus),
+      anyConfirmed: lines.some(l => l.premioBase || l.premioPlus),
+      anyPending: lines.some(l => l.premioConsulta),
+      anyPrize: lines.some(l => l.premioBase || l.premioPlus || l.premioConsulta),
       bestHits: Math.max.apply(null, lines.map(l => l.hits))
     };
+  }
+
+  function claseLinea(l){
+    return l.premioConsulta ? "section-header consulta" : "section-header";
+  }
+
+  function textoEstadoPremio(ana){
+    if(ana.anyConfirmed) return "Jugada con premio en el último sorteo";
+    if(ana.anyPending) return "Jugada con posible premio: revisá la categoría Sale o Sale";
+    return "Sin premios en el último sorteo";
   }
 
   function drawTable(ganadores){
@@ -869,7 +930,7 @@
     jugadas.forEach((j, i) => {
       const ana = analizarJugadaEnSorteo(j, ULTIMO_SORTEO);
       const item = document.createElement("div");
-      item.className = "list-item " + (ana.anyPrize ? "win" : "lose");
+      item.className = "list-item " + (ana.anyConfirmed ? "win" : (ana.anyPending ? "pending" : "lose"));
       const titulo = escapeHtml(j.nombre || ("Jugada " + (i+1)));
       const fecha = j.fecha ? " (" + escapeHtml(j.fecha) + ")" : "";
       item.innerHTML =
@@ -904,7 +965,6 @@
     });
     llenarSelectJugadas();
   }
-
   function renderDetalleJugadaUltimo(j){
     document.getElementById("detalle-jugada-titulo").textContent = j.nombre || "Jugada";
     document.getElementById("detalle-jugada-plus-label").textContent = "Número Plus: " + fmt2(j.plus);
@@ -919,11 +979,11 @@
           '<div style="font-weight:900;font-size:15px">Último sorteo</div>' +
           '<div class="small" style="font-weight:900">Sorteo ' + ULTIMO_SORTEO.numeroSorteo + ' • Plus ' + ULTIMO_SORTEO.numeroPlus + '</div>' +
         '</div>' +
-        '<div style="margin-top:10px;text-align:center;font-weight:900;font-size:16px">' + (ana.anyPrize ? 'Jugada con premio en el último sorteo' : 'Sin premios en el último sorteo') + '</div>' +
+        '<div style="margin-top:10px;text-align:center;font-weight:900;font-size:16px">' + textoEstadoPremio(ana) + '</div>' +
         '<div style="margin-top:8px;text-align:center;font-weight:900">' + (ana.plusHit ? 'Tu Plus coincide con el sorteo ✅' : 'Tu Plus no coincide') + '</div>' +
         ana.lines.map(l => (
           '<div class="section" style="margin-top:10px">' +
-            '<div class="section-header">' + l.nombre + ' • ' + l.hits + ' aciertos' + (l.premioPlus ? ' • + PLUS' : '') + '</div>' +
+            '<div class="' + claseLinea(l) + '">' + l.nombre + ' • ' + l.hits + ' aciertos' + (l.premioPlus ? ' • + PLUS' : '') + (l.premioConsulta ? ' • CONSULTAR' : '') + '</div>' +
             '<div class="section-body">' + buildBallsHTML(l.numeros, pickSet) + '</div>' +
           '</div>'
         )).join("") +
@@ -933,7 +993,7 @@
   function showJugScreen(which){
     document.querySelectorAll("#tab-jugadas .screen").forEach(s => s.classList.remove("active"));
     document.getElementById("jug-screen-" + which).classList.add("active");
-    const map = {main:"Controlar jugadas", detalle:"Detalle", ganaste:"¿Ganaste alguna vez?", ultimos:"Últimos 10 sorteos"};
+    const map = {main:"Controlar jugadas", detalle:"Detalle", ultimos:"Últimos 10 sorteos"};
     document.getElementById("sub-jugadas").textContent = map[which] || "Controlar jugadas";
   }
 
@@ -964,7 +1024,6 @@
     if(idx !== "" && jugadas[idx]) return jugadas[idx];
     return window._ultimosCustomPick || null;
   }
-
   function renderUltimosResultado(){
     const pick = getUltimosPickActual();
     const cont = document.getElementById("ultimos-resultado");
@@ -980,73 +1039,16 @@
       '<div class="card">' +
         '<div class="center" style="font-weight:900;font-size:16px">' + escapeHtml(sorteo.fechaTexto) + ' • Sorteo ' + sorteo.numeroSorteo + '</div>' +
         '<div class="center" style="margin-top:6px;font-weight:900">Plus del sorteo: ' + sorteo.numeroPlus + ' • Tu Plus: ' + fmt2(pick.plus) + (ana.plusHit ? ' ✅' : '') + '</div>' +
+        '<div class="center" style="margin-top:8px;font-weight:900">' + textoEstadoPremio(ana) + '</div>' +
         ana.lines.map(l => (
           '<div class="section" style="margin-top:10px">' +
-            '<div class="section-header">' + l.nombre + ' • ' + l.hits + ' aciertos' + (l.premioPlus ? ' • + PLUS' : '') + '</div>' +
+            '<div class="' + claseLinea(l) + '">' + l.nombre + ' • ' + l.hits + ' aciertos' + (l.premioPlus ? ' • + PLUS' : '') + (l.premioConsulta ? ' • CONSULTAR' : '') + '</div>' +
             '<div class="section-body">' + buildBallsHTML(l.numeros, pickSet) + '</div>' +
           '</div>'
         )).join("") +
       '</div>';
   }
 
-  function renderGanasteResultadoConPick(pick){
-    const cont = document.getElementById("ganaste-resultado");
-    const hits = [];
-    HISTORIAL_COMPLETO.forEach(s => {
-      const ana = analizarJugadaEnSorteo(pick, s);
-      ana.lines.forEach(l => {
-        if(l.premioBase || l.premioPlus){
-          hits.push({
-            fecha:s.fechaTexto,
-            sorteo:s.numeroSorteo,
-            juego:l.nombre,
-            aciertos:l.hits,
-            plus:l.premioPlus
-          });
-        }
-      });
-    });
-
-    if(!hits.length){
-      cont.innerHTML = '<div class="card"><div class="center" style="font-weight:900">No se detectaron premios en el historial cargado.</div></div>';
-      return;
-    }
-
-    cont.innerHTML = '<div class="card">' +
-      '<div class="center" style="font-weight:900;font-size:16px">Premios detectados</div>' +
-      hits.map(h => (
-        '<div class="section" style="margin-top:10px">' +
-          '<div class="section-header">' + h.fecha + ' • Sorteo ' + h.sorteo + '</div>' +
-          '<div style="padding:12px 10px;text-align:center;font-weight:900;line-height:1.5">' +
-            h.juego + ' • ' + h.aciertos + ' aciertos' + (h.plus ? ' • + PLUS' : '') +
-          '</div>' +
-        '</div>'
-      )).join("") +
-      '</div>';
-  }
-
-  function renderGanasteConMisJugadas(){
-    const cont = document.getElementById("ganaste-resultado");
-    if(!jugadas.length){
-      cont.innerHTML = '<div class="card"><div class="center" style="font-weight:900">No tenés jugadas guardadas.</div></div>';
-      return;
-    }
-    const resumen = [];
-    jugadas.forEach(j => {
-      let count = 0;
-      HISTORIAL_COMPLETO.forEach(s => {
-        if(analizarJugadaEnSorteo(j, s).anyPrize) count++;
-      });
-      if(count > 0) resumen.push({nombre:j.nombre, count, plus:j.plus});
-    });
-    if(!resumen.length){
-      cont.innerHTML = '<div class="card"><div class="center" style="font-weight:900">Tus jugadas no registran premios en el historial cargado.</div></div>';
-      return;
-    }
-    cont.innerHTML = '<div class="card"><div class="center" style="font-weight:900;font-size:16px">Tus jugadas con premios</div>' +
-      resumen.map(r => '<div class="section" style="margin-top:10px"><div class="section-header">'+ escapeHtml(r.nombre) +'</div><div style="padding:12px 10px;text-align:center;font-weight:900">Premios detectados: '+ r.count +' • Plus '+ fmt2(r.plus) +'</div></div>').join("") +
-      '</div>';
-  }
 
   function renderRuleta(pick){
     const p = pick || generarJugadaAleatoria();
@@ -1076,7 +1078,9 @@
   let pickerMain = [];
   let pickerPlus = "";
   let pickerCallback = null;
-
+  let pickerManual = false;
+  let pickerDirty = false;
+  let pickerSaveText = "Actualizar jugada";
   function renderPicker(){
     document.getElementById("picker-count").textContent = "Seleccionados: " + pickerMain.length + " / 6";
     document.getElementById("picker-selected-balls").innerHTML = pickerMain.map(n => '<div class="ball hit">'+n+'</div>').join("");
@@ -1087,17 +1091,41 @@
     document.querySelectorAll("#picker-grid-plus .num-btn").forEach(btn => {
       btn.classList.toggle("selected", pickerPlus === btn.dataset.n);
     });
+
+    const btnSave = document.getElementById("picker-save");
+    const btnCancel = document.getElementById("picker-cancel");
+    if(btnSave){
+      btnSave.textContent = pickerSaveText;
+      btnSave.style.display = pickerManual ? "block" : "none";
+    }
+    if(btnCancel){
+      btnCancel.style.marginTop = pickerManual ? "10px" : "0";
+    }
   }
-  function openPicker(initial, callback){
+
+  function intentarGuardarPickerAuto(){
+    if(!pickerManual && pickerDirty && pickerMain.length === 6 && pickerPlus){
+      setTimeout(savePicker, 80);
+    }
+  }
+
+  function openPicker(initial, callback, opts){
+    opts = opts || {};
     pickerMain = initial && initial.numeros ? sortNums(initial.numeros).slice(0,6) : [];
     pickerPlus = initial && initial.plus ? fmt2(initial.plus) : "";
     pickerCallback = callback || null;
+    pickerManual = !!opts.manual;
+    pickerDirty = false;
+    pickerSaveText = opts.saveText || (pickerManual ? "Actualizar jugada" : "Usar esta jugada");
     document.getElementById("modal-picker").style.display = "flex";
     renderPicker();
   }
+
   function closePicker(){
+    pickerSuspendidoPorCambioTab = false;
     document.getElementById("modal-picker").style.display = "none";
   }
+
   function savePicker(){
     if(pickerMain.length !== 6){
       mostrarToast("Elegí 6 números");
@@ -1129,7 +1157,9 @@
           pickerMain.push(n);
           pickerMain.sort((a,b)=>Number(a)-Number(b));
         }
+        pickerDirty = true;
         renderPicker();
+        intentarGuardarPickerAuto();
       });
       main.appendChild(b);
     }
@@ -1142,7 +1172,9 @@
       b.textContent = n;
       b.addEventListener("click", () => {
         pickerPlus = pickerPlus === n ? "" : n;
+        pickerDirty = true;
         renderPicker();
+        intentarGuardarPickerAuto();
       });
       plus.appendChild(b);
     }
@@ -1178,25 +1210,48 @@
     renderTodoJugadas();
     mostrarToast("Jugada guardada");
   }
+  let editandoIndex = -1;
+  let editandoPick = null;
+
+  function renderEditarPreview(){
+    const cont = document.getElementById("editar-preview");
+    if(!cont || !editandoPick) return;
+    cont.innerHTML = buildBallsHTML(sortNums(editandoPick.numeros), null, editandoPick.plus);
+  }
+
+  function cerrarModalEditar(){
+    document.getElementById("modal-editar").style.display = "none";
+    editandoIndex = -1;
+    editandoPick = null;
+  }
+
+  function guardarEdicionActual(){
+    if(editandoIndex < 0 || !jugadas[editandoIndex] || !editandoPick) return;
+    if(sortNums(editandoPick.numeros).length !== 6 || !editandoPick.plus){
+      mostrarToast("La jugada debe tener 6 números y Plus");
+      return;
+    }
+    const nombre = document.getElementById("input-editar-nombre").value.trim();
+    jugadas[editandoIndex] = {
+      nombre: nombre || ("Jugada " + (editandoIndex + 1)),
+      numeros: sortNums(editandoPick.numeros),
+      plus: fmt2(editandoPick.plus),
+      fecha: jugadas[editandoIndex] && jugadas[editandoIndex].fecha ? jugadas[editandoIndex].fecha : fechaActualTexto()
+    };
+    guardarJugadas();
+    renderTodoJugadas();
+    cerrarModalEditar();
+    mostrarToast("Jugada actualizada");
+  }
 
   function editarJugada(i){
     const j = jugadas[i];
     if(!j) return;
-    openPicker(j, (pick) => {
-      idxEdicion = i;
-      jugadaTemporal = pick;
-      openNameModal("Editar jugada", j.nombre || "", (name) => {
-        jugadas[idxEdicion] = {
-          nombre: name || ("Jugada " + (idxEdicion+1)),
-          numeros: sortNums(jugadaTemporal.numeros),
-          plus: fmt2(jugadaTemporal.plus),
-          fecha: jugadas[idxEdicion] && jugadas[idxEdicion].fecha ? jugadas[idxEdicion].fecha : fechaActualTexto()
-        };
-        guardarJugadas();
-        renderTodoJugadas();
-        mostrarToast("Jugada actualizada");
-      });
-    });
+    editandoIndex = i;
+    editandoPick = {numeros:sortNums(j.numeros), plus:fmt2(j.plus)};
+    document.getElementById("input-editar-nombre").value = j.nombre || ("Jugada " + (i + 1));
+    renderEditarPreview();
+    document.getElementById("modal-editar").style.display = "flex";
   }
 
   function renderTodoJugadas(){
@@ -1204,7 +1259,6 @@
     renderUltimosSelectSorteos();
     renderUltimosResultado();
   }
-
   function initEventos(){
     themeButtons().forEach(b => b.addEventListener("click", toggleTema));
 
@@ -1217,11 +1271,8 @@
 
     document.getElementById("btn-agregar-jugada").addEventListener("click", () => {
       openPicker(null, (pick) => {
-        jugadaTemporal = pick;
-        openNameModal("Guardar jugada", "Jugada " + (jugadas.length + 1), (name) => {
-          agregarJugadaDesdePick(jugadaTemporal, name);
-        });
-      });
+        agregarJugadaDesdePick(pick);
+      }, {manual:false});
     });
 
     document.getElementById("btn-borrar-todas").addEventListener("click", () => {
@@ -1236,29 +1287,11 @@
     });
 
     document.getElementById("btn-volver-jugadas").addEventListener("click", () => showJugScreen("main"));
-    document.getElementById("btn-ir-ganaste").addEventListener("click", () => {
-      showJugScreen("ganaste");
-      document.getElementById("ganaste-pick").innerHTML = "";
-      document.getElementById("ganaste-plus-label").textContent = "";
-      document.getElementById("ganaste-resultado").innerHTML = '<div class="small center">Elegí cómo querés verificar.</div>';
-    });
     document.getElementById("btn-ir-ultimos").addEventListener("click", () => {
       showJugScreen("ultimos");
       renderUltimosResultado();
     });
-
-    document.getElementById("btn-volver-ganaste").addEventListener("click", () => showJugScreen("main"));
     document.getElementById("btn-volver-ultimos").addEventListener("click", () => showJugScreen("main"));
-
-    document.getElementById("btn-ganaste-mis").addEventListener("click", renderGanasteConMisJugadas);
-    document.getElementById("btn-ganaste-custom").addEventListener("click", () => {
-      openPicker(window._ganasteCustomPick || null, (pick) => {
-        window._ganasteCustomPick = pick;
-        document.getElementById("ganaste-pick").innerHTML = buildBallsHTML(sortNums(pick.numeros), null, pick.plus);
-        document.getElementById("ganaste-plus-label").textContent = "Número Plus: " + fmt2(pick.plus);
-        renderGanasteResultadoConPick(pick);
-      });
-    });
 
     document.getElementById("ultimos-select-jugada").addEventListener("change", () => {
       if(document.getElementById("ultimos-select-jugada").value !== ""){
@@ -1276,7 +1309,7 @@
         document.getElementById("ultimos-pick").innerHTML = buildBallsHTML(sortNums(pick.numeros), null, pick.plus);
         document.getElementById("ultimos-plus-label").textContent = "Número Plus: " + fmt2(pick.plus);
         renderUltimosResultado();
-      });
+      }, {manual:false});
     });
 
     document.getElementById("btn-ruleta-generar").addEventListener("click", () => {
@@ -1288,6 +1321,17 @@
       openNameModal("Guardar jugada", "Ruleta " + (jugadas.length + 1), (name) => {
         agregarJugadaDesdePick(jugadaTemporal, name);
       });
+    });
+
+    document.getElementById("btn-editar-cancelar").addEventListener("click", cerrarModalEditar);
+    document.getElementById("btn-editar-guardar").addEventListener("click", guardarEdicionActual);
+    document.getElementById("btn-editar-cambiar").addEventListener("click", () => {
+      if(editandoIndex < 0 || !editandoPick) return;
+      openPicker(editandoPick, (pick) => {
+        editandoPick = pick;
+        renderEditarPreview();
+        guardarEdicionActual();
+      }, {manual:true, saveText:"Actualizar jugada"});
     });
 
     document.getElementById("btn-name-cancel").addEventListener("click", closeNameModal);
