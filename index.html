@@ -150,10 +150,241 @@
   .small{font-size:12px;color:var(--muted)}
   .center{text-align:center}
   .title2{font-size:18px;font-weight:900;text-align:center;margin:0}
+  /* ===== COMPARTIR JUGADAS ===== */
+  .mis-jugadas-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin-bottom:8px;
+  }
+  .mis-jugadas-top .title2{
+    flex:1;
+    margin:0;
+  }
+  .share-spacer{
+    width:78px;
+    min-width:78px;
+  }
+  .btn-share-mini{
+    width:78px;
+    min-width:78px;
+    border:none;
+    border-radius:10px;
+    background:#000;
+    color:#fff;
+    font-size:11px;
+    line-height:1.05;
+    font-weight:900;
+    padding:8px 6px;
+    cursor:pointer;
+    box-shadow:0 2px 8px rgba(0,0,0,.18);
+  }
+  body.dark .btn-share-mini{
+    background:#fff;
+    color:#111;
+    box-shadow:0 2px 8px rgba(0,0,0,.7);
+  }
+  .modal-compartir{
+    width:96%;
+    max-width:440px;
+    max-height:92vh;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    text-align:left;
+    padding:16px;
+  }
+  .share-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:8px;
+  }
+  .share-title{
+    font-size:18px;
+    font-weight:900;
+    color:var(--text);
+    line-height:1.15;
+  }
+  .share-sub{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:4px;
+    line-height:1.25;
+    font-weight:700;
+  }
+  .share-close{
+    border:none;
+    background:transparent;
+    color:var(--red);
+    font-size:24px;
+    line-height:1;
+    font-weight:900;
+    cursor:pointer;
+    padding:0 3px;
+  }
+  .share-tools{
+    display:flex;
+    gap:8px;
+    margin:8px 0 10px;
+  }
+  .share-tool-btn{
+    flex:1;
+    border:none;
+    border-radius:10px;
+    padding:9px 8px;
+    font-size:12px;
+    font-weight:900;
+    cursor:pointer;
+    background:#e0e0e0;
+    color:#111;
+  }
+  body.dark .share-tool-btn{
+    background:#333;
+    color:#fff;
+  }
+  .share-list{
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    max-height:38vh;
+    padding-right:3px;
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+  }
+  .share-row{
+    border:1px solid rgba(0,0,0,.10);
+    background:var(--card);
+    border-radius:13px;
+    padding:12px 10px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    cursor:default;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+  }
+  body.dark .share-row{
+    border-color:#444;
+    box-shadow:0 2px 8px rgba(0,0,0,.65);
+  }
+  .share-row.on{
+    border-color:var(--red);
+    box-shadow:0 0 0 2px rgba(244,67,54,.18);
+  }
+  .share-check{
+    width:32px;
+    height:32px;
+    border-radius:9px;
+    border:2px solid #999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-weight:900;
+    flex:0 0 32px;
+    background:transparent;
+    cursor:pointer;
+    touch-action:manipulation;
+    font-size:18px;
+  }
+  .share-row.on .share-check{
+    background:var(--red);
+    border-color:var(--red);
+  }
+  .share-info{
+    min-width:0;
+    flex:1;
+  }
+  .share-name{
+    font-size:12px;
+    font-weight:900;
+    color:var(--text);
+    margin-bottom:3px;
+  }
+  .share-nums{
+    font-size:16px;
+    font-weight:950;
+    letter-spacing:.4px;
+    color:var(--text);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .share-preview-label{
+    margin-top:12px;
+    margin-bottom:6px;
+    font-size:13px;
+    font-weight:900;
+    color:var(--text);
+  }
+  .share-preview{
+    width:100%;
+    min-height:86px;
+    resize:none;
+    border-radius:12px;
+    border:1px solid rgba(0,0,0,.12);
+    background:#f7f7f7;
+    color:#111;
+    padding:10px;
+    font-size:15px;
+    font-weight:900;
+    line-height:1.45;
+    user-select:text;
+    -webkit-user-select:text;
+  }
+  body.dark .share-preview{
+    background:#111;
+    color:#fff;
+    border-color:#444;
+  }
+  .share-status{
+    min-height:18px;
+    margin-top:7px;
+    font-size:12px;
+    color:var(--muted);
+    text-align:center;
+    font-weight:800;
+  }
+  .share-actions{
+    display:flex;
+    gap:8px;
+    margin-top:10px;
+  }
+  .share-action-copy,
+  .share-action-main{
+    flex:1;
+    border:none;
+    border-radius:12px;
+    padding:12px 10px;
+    color:#fff;
+    font-weight:900;
+    cursor:pointer;
+    font-size:14px;
+  }
+  .share-action-copy{
+    background:var(--red);
+  }
+  .share-action-main{
+    background:#000;
+  }
+  .share-empty{
+    text-align:center;
+    color:var(--muted);
+    font-weight:800;
+    padding:14px 8px;
+  }
+
   .list-item{
-    display:flex;align-items:center;justify-content:space-between;gap:10px;
-    padding:10px;border-radius:12px;background:#fff;border:1px solid #ddd;
-    box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:10px;cursor:pointer
+    display:block;
+    padding:10px 10px 9px;
+    border-radius:12px;
+    background:#fff;
+    border:1px solid #ddd;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);
+    margin-bottom:10px;
+    cursor:pointer;
   }
   body.dark .list-item{background:#202020;border-color:#444;box-shadow:0 2px 6px rgba(0,0,0,.9)}
   .list-item.win{background:#19f219!important;border-color:#11c711!important}
@@ -162,10 +393,95 @@
   .list-item.win *, .list-item.pending *, .list-item.lose *{color:#111!important}
   .section-header.consulta{background:#fbc02d!important;color:#111!important}
   .ball.consulta{background:#ffd54f!important;color:#111!important;border-color:#fbc02d!important}
-  .item-title{font-size:13px;font-weight:900}
-  .item-nums{font-size:17px;font-weight:900;letter-spacing:1px}
-  .item-plus{font-size:12px;font-weight:900;color:var(--muted)}
-  .item-actions{display:flex;align-items:center;gap:8px}
+  .item-main{
+    width:100%;
+    min-width:0;
+  }
+  .item-title{
+    font-size:12px;
+    font-weight:900;
+    line-height:1.15;
+    margin-bottom:2px;
+  }
+  .item-nums{
+    font-size:clamp(15px,4.6vw,18px);
+    font-weight:950;
+    letter-spacing:.45px;
+    line-height:1.12;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:clip;
+  }
+  .item-plus{font-size:12px;font-weight:900;color:var(--muted);line-height:1.15;margin-top:2px}
+  .item-actions{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:6px;
+    flex-wrap:nowrap;
+  }
+  .item-detalles{
+    font-size:13px;
+    font-weight:900;
+    color:#111!important;
+    line-height:1;
+  }
+  #lista-jugadas.jugadas-scroll-box{
+    max-height:322px;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    border:1px solid rgba(0,0,0,.32);
+    border-radius:8px;
+    padding:4px;
+    margin-top:10px!important;
+  }
+  body.dark #lista-jugadas.jugadas-scroll-box{
+    border-color:rgba(255,255,255,.32);
+  }
+  #lista-jugadas.jugadas-scroll-box .list-item:last-child{
+    margin-bottom:0;
+  }
+  .fav-btn{
+    background:none;
+    border:none;
+    color:#111;
+    font-size:18px;
+    font-weight:950;
+    cursor:pointer;
+    padding:0 2px;
+    min-width:34px;
+    height:24px;
+    line-height:1;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .fav-btn.on{
+    color:#111!important;
+    text-shadow:0 1px 2px rgba(0,0,0,.18);
+  }
+  .estado-carita{
+    width:26px;
+    height:26px;
+    font-size:20px;
+    line-height:1;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    color:#111;
+    font-weight:900;
+    font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",system-ui,sans-serif;
+  }
+  .list-item.win .estado-carita,
+  .list-item.pending .estado-carita,
+  .list-item.lose .estado-carita,
+  .list-item.win .fav-btn,
+  .list-item.pending .fav-btn,
+  .list-item.lose .fav-btn{
+    color:#111!important;
+  }
+
   .icon-btn{background:none;border:none;font-size:20px;cursor:pointer}
   .icon-edit{color:#1976d2}
   .icon-del{color:var(--danger)}
@@ -235,6 +551,52 @@
   }
   .toast.show{display:block}
 .card:last-child{margin-bottom:20px;}
+  /* ===== QUITAR CUADRITO CELESTE / SELECCIÓN VISUAL EN CELULAR ===== */
+  html, body,
+  .app, .content, .phone, .main, .card, .section, .section-header, .section-body,
+  .ball, .badge, .list-item, .item-actions, .nav, .nav button,
+  button, .btn-big, .btn-add, .btn-secondary, .btn-danger, .btn-modal,
+  .btn-share-mini, .share-tool-btn, .share-action-copy, .share-action-main,
+  .icon-btn, .num-btn, .picker-sheet, .picker-topbar, .picker-content, .picker-grid,
+  .picker-selected-row, .modal, .modal-overlay, a.btn-add{
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none !important;
+    outline: none !important;
+  }
+
+  button:focus,
+  button:active,
+  .num-btn:focus,
+  .num-btn:active,
+  .ball:focus,
+  .ball:active,
+  .list-item:focus,
+  .list-item:active,
+  .nav button:focus,
+  .nav button:active,
+  a.btn-add:focus,
+  a.btn-add:active{
+    -webkit-tap-highlight-color: transparent !important;
+    outline: none !important;
+  }
+
+  input,
+  textarea,
+  select,
+  .share-preview{
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    -webkit-touch-callout: default !important;
+    -webkit-tap-highlight-color: transparent !important;
+    outline: none;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus{
+    outline: none;
+  }
+
 </style>
 </head>
 <body>
@@ -293,7 +655,11 @@
         <main class="main">
           <section id="jug-screen-main" class="screen active">
             <section class="card">
-              <h2 class="title2">Mis jugadas</h2>
+              <div class="mis-jugadas-top">
+                <span class="share-spacer"></span>
+                <h2 class="title2">Mis jugadas</h2>
+                <button class="btn-share-mini" id="btn-compartir-jugadas" type="button">Compartir<br>jugadas</button>
+              </div>
               <div id="lista-jugadas" style="margin-top:10px"></div>
               <button class="btn-danger" id="btn-borrar-todas" style="margin-top:10px">Borrar TODAS las jugadas</button>
               <button class="btn-add" id="btn-agregar-jugada" style="margin-top:10px">Agregar jugada</button>
@@ -441,6 +807,34 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="modal-compartir-jugadas">
+  <div class="modal modal-compartir">
+    <div class="share-head">
+      <div>
+        <div class="share-title">Compartir jugadas</div>
+        <div class="share-sub">Seleccioná una o varias jugadas. Se enviarán una por línea, listas para mandar por WhatsApp.</div>
+      </div>
+      <button class="share-close" id="btn-cerrar-compartir-jugadas" type="button">✕</button>
+    </div>
+
+    <div class="share-tools">
+      <button class="share-tool-btn" id="btn-compartir-todas-jugadas" type="button">Seleccionar todas</button>
+      <button class="share-tool-btn" id="btn-limpiar-compartir-jugadas" type="button">Limpiar</button>
+    </div>
+
+    <div class="share-list" id="lista-compartir-jugadas"></div>
+
+    <div class="share-preview-label">Texto que se va a compartir</div>
+    <textarea class="share-preview" id="texto-compartir-jugadas" readonly placeholder="Seleccioná una o más jugadas"></textarea>
+    <div class="share-status" id="estado-compartir-jugadas"></div>
+
+    <div class="share-actions">
+      <button class="share-action-copy" id="btn-copiar-compartir-jugadas" type="button">Copiar</button>
+      <button class="share-action-main" id="btn-enviar-compartir-jugadas" type="button">Compartir</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modal-confirm">
   <div class="modal">
     <div class="modal-title" id="confirm-title">Confirmar</div>
@@ -492,6 +886,21 @@
 <script>
 (function(){
   "use strict";
+
+
+  // Evita el cuadro celeste / selección larga en botones y zonas visuales.
+  // Se dejan libres inputs, selects y textarea para escribir o copiar cuando corresponda.
+  function esCampoEditableTap(el){
+    return !!(el && el.closest && el.closest("input, textarea, select, [contenteditable='true'], .share-preview"));
+  }
+
+  ["contextmenu", "selectstart", "dragstart"].forEach(function(evt){
+    document.addEventListener(evt, function(e){
+      if(!esCampoEditableTap(e.target)){
+        e.preventDefault();
+      }
+    }, {passive:false});
+  });
 
   const STORAGE_THEME = "lotoplus_tema_v1";
   const STORAGE_JUGADAS = "lotoplus_mis_jugadas_v1";
@@ -892,6 +1301,7 @@
   let jugadas = [];
   let jugadaTemporal = null;
   let idxEdicion = -1;
+  let compartirSeleccionadas = new Set();
 
   function cargarJugadas(){
     try{
@@ -902,6 +1312,7 @@
   }
   function guardarJugadas(){
     try{ localStorage.setItem(STORAGE_JUGADAS, JSON.stringify(jugadas)); }catch(e){}
+    try{ if(typeof refrescarCompartirJugadas === "function") refrescarCompartirJugadas(); }catch(e){}
   }
 
   function fechaActualTexto(){
@@ -910,48 +1321,131 @@
   }
 
   function normalizarJugada(j, i){
+    const favRaw = j && (j.favoritoAt || j.favAt || j.favoritaAt);
+    const favNum = favRaw ? Number(favRaw) : 0;
     return {
       nombre: j && j.nombre ? j.nombre : ("Jugada " + (i + 1)),
       numeros: sortNums((j && j.numeros) || []),
       plus: fmt2((j && j.plus) || "00"),
-      fecha: j && j.fecha ? String(j.fecha) : ""
+      fecha: j && j.fecha ? String(j.fecha) : "",
+      favoritoAt: favNum > 0 ? favNum : null
     };
+  }
+
+  function claveJugada(pick){
+    // Detecta duplicados SOLO por los 6 números principales.
+    // El Número Plus no importa para considerar una jugada repetida.
+    return sortNums((pick && pick.numeros) || []).slice(0,6).join("-");
+  }
+
+  function jugadaYaExiste(pick, ignorarIndex){
+    const clave = claveJugada(pick);
+    return jugadas.some((j, i) => {
+      if(typeof ignorarIndex === "number" && i === ignorarIndex) return false;
+      return claveJugada(j) === clave;
+    });
+  }
+
+  function avisarJugadaDuplicada(){
+    mostrarToast("Números ya agregados");
+  }
+
+
+  function favoritosOrdenados(){
+    return jugadas
+      .map((j, i) => ({j:j, i:i, t:Number(j && j.favoritoAt ? j.favoritoAt : 0)}))
+      .filter(x => x.t > 0)
+      .sort((a,b) => (a.t - b.t) || (a.i - b.i));
+  }
+
+  function ordenVisualJugadas(){
+    const favs = favoritosOrdenados();
+    const usados = new Set(favs.map(x => x.i));
+    const normales = jugadas
+      .map((j, i) => i)
+      .filter(i => !usados.has(i));
+    return favs.map(x => x.i).concat(normales);
+  }
+
+  function numeroFavoritoPorIndice(idx){
+    const favs = favoritosOrdenados();
+    const pos = favs.findIndex(x => x.i === idx);
+    return pos >= 0 ? (pos + 1) : "";
+  }
+
+  function toggleFavoritoJugada(idx){
+    if(!jugadas[idx]) return;
+    if(jugadas[idx].favoritoAt){
+      jugadas[idx].favoritoAt = null;
+      mostrarToast("Favorito quitado");
+    }else{
+      jugadas[idx].favoritoAt = Date.now();
+      mostrarToast("Jugada marcada como favorita");
+    }
+    guardarJugadas();
+    renderTodoJugadas();
+  }
+
+  function caritaResultado(ana){
+    if(ana && ana.anyConfirmed) return "😊";
+    if(ana && ana.anyPending) return "🤔";
+    return "😢";
   }
 
   function renderListaJugadas(){
     const lista = document.getElementById("lista-jugadas");
     lista.innerHTML = "";
+    lista.classList.toggle("jugadas-scroll-box", jugadas.length > 4);
+
     if(!jugadas.length){
+      lista.classList.remove("jugadas-scroll-box");
       lista.innerHTML = '<div class="small center" style="padding:10px 0">No agregaste jugadas.</div>';
       llenarSelectJugadas();
       return;
     }
 
-    jugadas.forEach((j, i) => {
+    ordenVisualJugadas().forEach((i) => {
+      const j = jugadas[i];
+      if(!j) return;
+
       const ana = analizarJugadaEnSorteo(j, ULTIMO_SORTEO);
       const item = document.createElement("div");
       item.className = "list-item " + (ana.anyConfirmed ? "win" : (ana.anyPending ? "pending" : "lose"));
       const titulo = escapeHtml(j.nombre || ("Jugada " + (i+1)));
       const fecha = j.fecha ? " (" + escapeHtml(j.fecha) + ")" : "";
+      const favNro = numeroFavoritoPorIndice(i);
+      const favTexto = j.favoritoAt ? ("⭐" + favNro) : "☆";
+      const favTitle = j.favoritoAt ? "Quitar favorito" : "Marcar favorito";
+
       item.innerHTML =
-        '<div>' +
+        '<div class="item-main">' +
           '<div class="item-title">' + titulo + fecha + '</div>' +
           '<div class="item-nums">' + sortNums(j.numeros).join("-") + '</div>' +
           '<div class="item-plus">Plus ' + fmt2(j.plus) + '</div>' +
         '</div>' +
         '<div class="item-actions">' +
-          '<span class="item-plus" style="font-size:14px;font-weight:900;color:#111">Detalles</span>' +
+          '<button class="fav-btn ' + (j.favoritoAt ? "on" : "") + '" data-fav="'+i+'" type="button" title="'+ favTitle +'">' + favTexto + '</button>' +
+          '<span class="estado-carita" title="Estado de la jugada">' + caritaResultado(ana) + '</span>' +
+          '<span class="item-detalles">Detalles</span>' +
           '<button class="icon-btn icon-edit" data-edit="'+i+'" type="button">✎</button>' +
           '<button class="icon-btn icon-del" data-del="'+i+'" type="button">✕</button>' +
         '</div>';
+
       item.addEventListener("click", (e) => {
-        if(e.target.closest("[data-edit]") || e.target.closest("[data-del]")) return;
+        if(e.target.closest("[data-edit]") || e.target.closest("[data-del]") || e.target.closest("[data-fav]")) return;
         abrirDetalleJugada(i);
       });
+
+      item.querySelector("[data-fav]").addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleFavoritoJugada(i);
+      });
+
       item.querySelector("[data-edit]").addEventListener("click", (e) => {
         e.stopPropagation();
         editarJugada(i);
       });
+
       item.querySelector("[data-del]").addEventListener("click", (e) => {
         e.stopPropagation();
         confirmar("¿Eliminar esta jugada?", "Esta acción no se puede deshacer.", () => {
@@ -961,10 +1455,245 @@
           mostrarToast("Jugada eliminada");
         });
       });
+
       lista.appendChild(item);
     });
+
     llenarSelectJugadas();
   }
+
+  // Compartir jugadas
+  function formatoCompartirJugada(jugada, idx){
+    try{
+      const nums = sortNums((jugada && jugada.numeros) ? jugada.numeros : []);
+      const plus = fmt2((jugada && jugada.plus) ? jugada.plus : "00");
+      if(nums.length < 6) return "";
+      let linea = nums.slice(0,6).map(fmt2).join("-") + " Plus " + plus;
+      const favNro = (typeof idx === "number") ? numeroFavoritoPorIndice(idx) : "";
+      if(jugada && jugada.favoritoAt && favNro){
+        linea += " ⭐" + favNro;
+      }
+      return linea;
+    }catch(e){
+      return "";
+    }
+  }
+
+  function textoCompartirSeleccionadas(){
+    const lineas = [];
+    ordenVisualJugadas().forEach(idx => {
+      if(!compartirSeleccionadas.has(idx)) return;
+      const j = jugadas[idx];
+      const linea = formatoCompartirJugada(j, idx);
+      if(linea) lineas.push(linea);
+    });
+    return lineas.join("\n");
+  }
+
+  function actualizarPreviewCompartir(){
+    const txt = document.getElementById("texto-compartir-jugadas");
+    if(txt) txt.value = textoCompartirSeleccionadas();
+
+    const estado = document.getElementById("estado-compartir-jugadas");
+    if(estado){
+      const c = compartirSeleccionadas.size;
+      estado.textContent = c ? (c + " jugada" + (c === 1 ? "" : "s") + " seleccionada" + (c === 1 ? "" : "s")) : "Seleccioná al menos una jugada.";
+    }
+  }
+
+  function renderCompartirJugadas(){
+    const lista = document.getElementById("lista-compartir-jugadas");
+    if(!lista) return;
+    lista.innerHTML = "";
+
+    if(!jugadas.length){
+      lista.innerHTML = '<div class="share-empty">No tenés jugadas guardadas para compartir.</div>';
+      compartirSeleccionadas.clear();
+      actualizarPreviewCompartir();
+      return;
+    }
+
+    Array.from(compartirSeleccionadas).forEach(idx => {
+      if(!jugadas[idx]) compartirSeleccionadas.delete(idx);
+    });
+
+    ordenVisualJugadas().forEach((i) => {
+      const j = jugadas[i];
+      if(!j) return;
+
+      const row = document.createElement("div");
+      row.className = "share-row" + (compartirSeleccionadas.has(i) ? " on" : "");
+
+      const check = document.createElement("div");
+      check.className = "share-check";
+      check.textContent = compartirSeleccionadas.has(i) ? "✓" : "";
+
+      const info = document.createElement("div");
+      info.className = "share-info";
+
+      const name = document.createElement("div");
+      name.className = "share-name";
+      name.textContent = (j.nombre || ("Jugada " + (i + 1))) + (j.fecha ? " (" + j.fecha + ")" : "");
+
+      const nums = document.createElement("div");
+      nums.className = "share-nums";
+      nums.textContent = formatoCompartirJugada(j, i);
+
+      info.appendChild(name);
+      info.appendChild(nums);
+      row.appendChild(check);
+      row.appendChild(info);
+
+      check.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if(compartirSeleccionadas.has(i)) compartirSeleccionadas.delete(i);
+        else compartirSeleccionadas.add(i);
+        renderCompartirJugadas();
+      });
+
+      row.addEventListener("click", () => {
+        if(compartirSeleccionadas.has(i)) compartirSeleccionadas.delete(i);
+        else compartirSeleccionadas.add(i);
+        renderCompartirJugadas();
+      });
+
+      lista.appendChild(row);
+    });
+
+    actualizarPreviewCompartir();
+  }
+
+  function refrescarCompartirJugadas(){
+    const modal = document.getElementById("modal-compartir-jugadas");
+    if(modal && modal.style.display === "flex"){
+      renderCompartirJugadas();
+    }
+  }
+
+  function abrirCompartirJugadas(){
+    cargarJugadas();
+    renderListaJugadas();
+    compartirSeleccionadas.clear();
+    for(let i = 0; i < jugadas.length; i++){
+      compartirSeleccionadas.add(i);
+    }
+    renderCompartirJugadas();
+    const modal = document.getElementById("modal-compartir-jugadas");
+    if(modal) modal.style.display = "flex";
+  }
+
+  function cerrarCompartirJugadas(){
+    const modal = document.getElementById("modal-compartir-jugadas");
+    if(modal) modal.style.display = "none";
+  }
+
+  function seleccionarTodasCompartir(){
+    compartirSeleccionadas.clear();
+    for(let i = 0; i < jugadas.length; i++){
+      compartirSeleccionadas.add(i);
+    }
+    renderCompartirJugadas();
+  }
+
+  function limpiarCompartir(){
+    compartirSeleccionadas.clear();
+    renderCompartirJugadas();
+  }
+
+  function copiarTextoCompartir(){
+    const texto = textoCompartirSeleccionadas();
+    const estado = document.getElementById("estado-compartir-jugadas");
+
+    if(!texto){
+      if(estado) estado.textContent = "Seleccioná una o más jugadas.";
+      return Promise.resolve(false);
+    }
+
+    function ok(){
+      if(estado) estado.textContent = "Texto copiado ✅";
+      return true;
+    }
+
+    function copiarConTextareaOculto(){
+      try{
+        const tmp = document.createElement("textarea");
+        tmp.value = texto;
+        tmp.setAttribute("readonly", "readonly");
+        tmp.style.position = "fixed";
+        tmp.style.left = "-9999px";
+        tmp.style.top = "0";
+        tmp.style.opacity = "0";
+        document.body.appendChild(tmp);
+        tmp.focus();
+        tmp.select();
+        document.execCommand("copy");
+        document.body.removeChild(tmp);
+        return ok();
+      }catch(e){
+        if(estado) estado.textContent = "No se pudo copiar automáticamente.";
+        return false;
+      }
+    }
+
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      return navigator.clipboard.writeText(texto).then(ok).catch(() => copiarConTextareaOculto());
+    }
+
+    return Promise.resolve(copiarConTextareaOculto());
+  }
+
+  function compartirTextoJugadas(){
+    const texto = textoCompartirSeleccionadas();
+    const estado = document.getElementById("estado-compartir-jugadas");
+
+    if(!texto){
+      if(estado) estado.textContent = "Seleccioná una o más jugadas.";
+      return;
+    }
+
+    const url = "whatsapp://send?text=" + encodeURIComponent(texto);
+
+    try{
+      if(estado) estado.textContent = "Abriendo WhatsApp...";
+      cerrarCompartirJugadas();
+    }catch(e){}
+
+    let enviado = false;
+
+    try{
+      const a = document.createElement("a");
+      a.href = url;
+      a.target = "_top";
+      a.style.display = "none";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => { try{ document.body.removeChild(a); }catch(e){} }, 1200);
+      enviado = true;
+    }catch(e){}
+
+    if(!enviado){
+      try{
+        if(window.top){
+          window.top.location.href = url;
+          enviado = true;
+        }
+      }catch(e){}
+    }
+
+    if(!enviado){
+      try{
+        window.location.href = url;
+        enviado = true;
+      }catch(e){}
+    }
+
+    if(!enviado){
+      copiarTextoCompartir().then(() => {
+        if(estado) estado.textContent = "No se pudo abrir WhatsApp. Texto copiado ✅";
+      });
+    }
+  }
+
   function renderDetalleJugadaUltimo(j){
     document.getElementById("detalle-jugada-titulo").textContent = j.nombre || "Jugada";
     document.getElementById("detalle-jugada-plus-label").textContent = "Número Plus: " + fmt2(j.plus);
@@ -1200,6 +1929,11 @@
   function closeConfirm(){ document.getElementById("modal-confirm").style.display = "none"; confirmar._cb = null; }
 
   function agregarJugadaDesdePick(pick, nombre){
+    if(jugadaYaExiste(pick)){
+      avisarJugadaDuplicada();
+      return false;
+    }
+
     jugadas.push({
       nombre: nombre || ("Jugada " + (jugadas.length + 1)),
       numeros: sortNums(pick.numeros),
@@ -1209,6 +1943,7 @@
     guardarJugadas();
     renderTodoJugadas();
     mostrarToast("Jugada guardada");
+    return true;
   }
   let editandoIndex = -1;
   let editandoPick = null;
@@ -1227,16 +1962,29 @@
 
   function guardarEdicionActual(){
     if(editandoIndex < 0 || !jugadas[editandoIndex] || !editandoPick) return;
-    if(sortNums(editandoPick.numeros).length !== 6 || !editandoPick.plus){
+
+    const nuevaPick = {
+      numeros: sortNums(editandoPick.numeros),
+      plus: fmt2(editandoPick.plus)
+    };
+
+    if(nuevaPick.numeros.length !== 6 || !nuevaPick.plus){
       mostrarToast("La jugada debe tener 6 números y Plus");
       return;
     }
+
+    if(jugadaYaExiste(nuevaPick, editandoIndex)){
+      avisarJugadaDuplicada();
+      return;
+    }
+
     const nombre = document.getElementById("input-editar-nombre").value.trim();
     jugadas[editandoIndex] = {
       nombre: nombre || ("Jugada " + (editandoIndex + 1)),
-      numeros: sortNums(editandoPick.numeros),
-      plus: fmt2(editandoPick.plus),
-      fecha: jugadas[editandoIndex] && jugadas[editandoIndex].fecha ? jugadas[editandoIndex].fecha : fechaActualTexto()
+      numeros: nuevaPick.numeros,
+      plus: nuevaPick.plus,
+      fecha: jugadas[editandoIndex] && jugadas[editandoIndex].fecha ? jugadas[editandoIndex].fecha : fechaActualTexto(),
+      favoritoAt: jugadas[editandoIndex] && jugadas[editandoIndex].favoritoAt ? jugadas[editandoIndex].favoritoAt : null
     };
     guardarJugadas();
     renderTodoJugadas();
@@ -1273,6 +2021,16 @@
       openPicker(null, (pick) => {
         agregarJugadaDesdePick(pick);
       }, {manual:false});
+    });
+
+    document.getElementById("btn-compartir-jugadas").addEventListener("click", abrirCompartirJugadas);
+    document.getElementById("btn-cerrar-compartir-jugadas").addEventListener("click", cerrarCompartirJugadas);
+    document.getElementById("btn-compartir-todas-jugadas").addEventListener("click", seleccionarTodasCompartir);
+    document.getElementById("btn-limpiar-compartir-jugadas").addEventListener("click", limpiarCompartir);
+    document.getElementById("btn-copiar-compartir-jugadas").addEventListener("click", () => { copiarTextoCompartir(); });
+    document.getElementById("btn-enviar-compartir-jugadas").addEventListener("click", compartirTextoJugadas);
+    document.getElementById("modal-compartir-jugadas").addEventListener("click", (e) => {
+      if(e.target === document.getElementById("modal-compartir-jugadas")) cerrarCompartirJugadas();
     });
 
     document.getElementById("btn-borrar-todas").addEventListener("click", () => {
