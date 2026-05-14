@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet" />
 <title>Loto Plus</title>
 <style>
   :root{
@@ -403,7 +404,15 @@
     line-height:1.15;
     margin-bottom:2px;
   }
-  .item-nums{
+    .item-play{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    flex-wrap:nowrap;
+    white-space:nowrap;
+    overflow:hidden;
+  }
+.item-nums{
     font-size:clamp(15px,4.6vw,18px);
     font-weight:950;
     letter-spacing:.45px;
@@ -412,7 +421,14 @@
     overflow:hidden;
     text-overflow:clip;
   }
-  .item-plus{font-size:12px;font-weight:900;color:var(--muted);line-height:1.15;margin-top:2px}
+  .item-plus{font-size:12px;font-weight:900;color:var(--muted);line-height:1.15;margin-top:2px;white-space:nowrap}
+  .item-status{
+    font-size:13px;
+    font-weight:950;
+    color:#111!important;
+    line-height:1.2;
+    margin-top:5px;
+  }
   .item-actions{
     display:flex;
     align-items:center;
@@ -523,23 +539,123 @@
   .picker-title{font-weight:900;font-size:16px}
   .picker-sub{font-size:12px;opacity:.95;margin-top:2px;font-weight:700}
   .picker-close{background:none;border:none;color:#fff;font-size:26px;line-height:1;cursor:pointer;padding:2px 6px}
-  .picker-content{padding:12px 10px 14px;flex:1;overflow:auto}
+  .picker-content{padding:12px 10px 14px;flex:1;overflow:auto;-webkit-overflow-scrolling:touch}
   .picker-selected-row{
     background:var(--card);border-radius:14px;box-shadow:var(--shadow);
-    padding:12px;margin-bottom:10px;text-align:center
+    padding:12px;margin-bottom:10px;text-align:center;
+    border:1px solid rgba(0,0,0,.10)
   }
-  .picker-selected-title{font-size:13px;font-weight:900;margin-bottom:8px}
-  .picker-selected-balls{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;min-height:40px}
-  .picker-grid{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:10px;margin-bottom:10px}
+  body.dark .picker-selected-row{
+    background:var(--card);
+    color:var(--text);
+    border-color:rgba(255,255,255,.28);
+    box-shadow:0 6px 16px rgba(0,0,0,.9)
+  }
+  .picker-selected-title{font-size:13px;font-weight:900;margin-bottom:8px;color:var(--text)}
+  .picker-selected-balls{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    min-height:42px
+  }
+  .picker-selected-balls .ball{
+    min-width:36px;
+    min-height:36px;
+    padding:7px 0;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:var(--pill);
+    font-size:15px;
+    font-weight:900;
+  }
+  .picker-selected-balls .ball.hit{
+    background:var(--ok)!important;
+    color:#fff!important;
+    border:2px solid #1b5e20!important;
+    box-shadow:0 2px 6px rgba(0,0,0,.22)!important;
+  }
+  body.dark .picker-selected-balls .ball.hit{
+    background:var(--ok)!important;
+    color:#fff!important;
+    border:2px solid #ffffff!important;
+    box-shadow:0 0 0 2px rgba(46,125,50,.9),0 2px 8px rgba(0,0,0,.95)!important;
+  }
+  .picker-selected-balls .ball.plus{
+    background:#ffd54f!important;
+    color:#111!important;
+    border:2px solid #fbc02d!important;
+    box-shadow:0 2px 6px rgba(0,0,0,.22)!important;
+  }
+  body.dark .picker-selected-balls .ball.plus{
+    background:#ffd54f!important;
+    color:#111!important;
+    border:2px solid #ffffff!important;
+    box-shadow:0 0 0 2px rgba(251,192,45,.85),0 2px 8px rgba(0,0,0,.95)!important;
+  }
+  #picker-plus-view{color:var(--muted);font-weight:800}
+  body.dark #picker-plus-view,
+  body.dark #picker-count,
+  body.dark .picker-hint{
+    color:var(--text)!important;
+  }
+  .picker-grid{
+    background:var(--card);
+    border-radius:16px;
+    box-shadow:var(--shadow);
+    padding:10px;
+    margin-bottom:10px;
+    border:1px solid rgba(0,0,0,.08)
+  }
+  body.dark .picker-grid{
+    background:var(--card);
+    border-color:rgba(255,255,255,.16)
+  }
   .picker-grid-inner{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
   .picker-grid-plus{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
   .num-btn{
-    border:none;border-radius:10px;padding:14px 0;font-weight:900;font-size:16px;cursor:pointer;
-    background:#8b8b8b;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.18)
+    border:2px solid transparent;
+    border-radius:10px;
+    padding:12px 0;
+    font-weight:900;
+    font-size:16px;
+    cursor:pointer;
+    background:#8b8b8b;
+    color:#fff;
+    box-shadow:0 2px 6px rgba(0,0,0,.18)
   }
-  body.dark .num-btn{background:#6c6c6c;box-shadow:0 2px 6px rgba(0,0,0,.9)}
-  .num-btn.selected{background:var(--ok);color:#fff}
-  .num-btn.plus-btn.selected{background:#fbc02d;color:#111}
+  body.dark .num-btn{
+    background:#6c6c6c;
+    color:#fff;
+    border-color:rgba(255,255,255,.10);
+    box-shadow:0 2px 6px rgba(0,0,0,.9)
+  }
+  .num-btn.selected{
+    background:var(--ok)!important;
+    color:#fff!important;
+    border-color:#1b5e20!important;
+    box-shadow:0 0 0 2px rgba(46,125,50,.28),0 2px 8px rgba(0,0,0,.25)!important
+  }
+  body.dark .num-btn.selected{
+    background:var(--ok)!important;
+    color:#fff!important;
+    border-color:#ffffff!important;
+    box-shadow:0 0 0 2px rgba(46,125,50,.95),0 2px 8px rgba(0,0,0,.95)!important
+  }
+  .num-btn.plus-btn.selected{
+    background:#fbc02d!important;
+    color:#111!important;
+    border-color:#8a6d00!important;
+    box-shadow:0 0 0 2px rgba(251,192,45,.35),0 2px 8px rgba(0,0,0,.25)!important
+  }
+  body.dark .num-btn.plus-btn.selected{
+    background:#fbc02d!important;
+    color:#111!important;
+    border-color:#ffffff!important;
+    box-shadow:0 0 0 2px rgba(251,192,45,.95),0 2px 8px rgba(0,0,0,.95)!important
+  }
   .picker-hint{text-align:center;font-size:12px;color:var(--muted);margin-top:10px;font-weight:700}
   .picker-actions{padding:10px}
   .hidden{display:none!important}
@@ -737,9 +853,7 @@
             </div>
 
             <a class="btn-add"
-               href="https://wa.me/5493873538411?text=Hola%2C%20me%20pueden%20pasar%20informaci%C3%B3n"
-               target="_blank"
-               rel="noopener"
+               href="whatsapp://send?text=Vengo%20de%20la%20App%20del%20Loto%20Plus%2C%20me%20podr%C3%ADan%20pasar%20informaci%C3%B3n.&phone=5493873538411"
                style="display:block;text-align:center;text-decoration:none;margin-top:14px">
                Contactar por WhatsApp
             </a>
@@ -784,7 +898,10 @@
 <div class="modal-overlay" id="modal-name">
   <div class="modal">
     <div class="modal-title" id="modal-name-title">Guardar jugada</div>
-    <input class="input" id="input-name" type="text" placeholder="Nombre de la jugada" />
+    <div class="small center" style="margin-bottom:8px">Elegí un nombre para esta jugada.</div>
+    <input class="input" id="input-name" type="text" placeholder="Nombre de la jugada" maxlength="35" />
+    <div class="small center" id="name-preview-title" style="font-weight:900;margin-top:10px">Jugada seleccionada</div>
+    <div class="section-body" id="name-preview" style="margin-top:6px"></div>
     <div class="modal-buttons">
       <button class="btn-modal btn-cancel" id="btn-name-cancel">Cancelar</button>
       <button class="btn-modal btn-save" id="btn-name-save">Guardar</button>
@@ -812,19 +929,19 @@
     <div class="share-head">
       <div>
         <div class="share-title">Compartir jugadas</div>
-        <div class="share-sub">Seleccioná una o varias jugadas. Se enviarán una por línea, listas para mandar por WhatsApp.</div>
+        <div class="share-sub">Seleccioná una o varias jugadas. Las favoritas aparecen primero.</div>
       </div>
       <button class="share-close" id="btn-cerrar-compartir-jugadas" type="button">✕</button>
     </div>
 
     <div class="share-tools">
       <button class="share-tool-btn" id="btn-compartir-todas-jugadas" type="button">Seleccionar todas</button>
-      <button class="share-tool-btn" id="btn-limpiar-compartir-jugadas" type="button">Limpiar</button>
+      <button class="share-tool-btn" id="btn-limpiar-compartir-jugadas" type="button">Quitar selección</button>
     </div>
 
     <div class="share-list" id="lista-compartir-jugadas"></div>
 
-    <div class="share-preview-label">Texto que se va a compartir</div>
+    <div class="share-preview-label">Vista previa</div>
     <textarea class="share-preview" id="texto-compartir-jugadas" readonly placeholder="Seleccioná una o más jugadas"></textarea>
     <div class="share-status" id="estado-compartir-jugadas"></div>
 
@@ -871,7 +988,7 @@
       <div class="picker-grid">
         <div class="small center" style="font-weight:900;margin-bottom:8px">Número Plus</div>
         <div class="picker-grid-plus" id="picker-grid-plus"></div>
-        <div class="picker-hint">Elegí un Plus del 00 al 09</div>
+        <div class="picker-hint">Elegí un Plus del 00 al 09. Luego podrás ponerle nombre antes de guardar.</div>
       </div>
     </div>
     <div class="picker-actions">
@@ -912,10 +1029,10 @@
   pozoAcumuladoTexto:"$ 33.439.000.000",
   numeroPlus:"06",
   juegos:[
-    {nombre:"Tradicional", numeros:["01","10","19","22","32","41"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.642.544.979,82"},{aciertos:"5", ganadores:"Vacante", premio:"$ 13.998.411,90"},{aciertos:"4", ganadores:"Vacante", premio:"$ 2.799.682,38"}]},
-    {nombre:"Match", numeros:["04","24","29","36","40","45"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 8.570.364.384,89"},{aciertos:"5", ganadores:"Vacante", premio:"$ 13.998.411,90"},{aciertos:"4", ganadores:"Vacante", premio:"$ 2.799.682,38"}]},
+    {nombre:"Tradicional", numeros:["01","10","19","22","32","41"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.642.544.979,82"},{aciertos:"5", ganadores:"14", premio:"$ 13.998.411,90"},{aciertos:"4", ganadores:"611", premio:"$ 2.799.682,38"}]},
+    {nombre:"Match", numeros:["04","24","29","36","40","45"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 8.570.364.384,89"},{aciertos:"5", ganadores:"1", premio:"$ 13.998.411,90"},{aciertos:"4", ganadores:"171", premio:"$ 2.799.682,38"}]},
     {nombre:"Desquite", numeros:["13","15","31","34","40","43"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 825.570.812,80"}]},
-    {nombre:"Sale o Sale", numeros:["03","09","11","23","26","40"], ganadores:[{aciertos:"0", ganadores:"Vacante", premio:"$ 36.056.515,50"}]}
+    {nombre:"Sale o Sale", numeros:["03","09","11","23","26","40"], ganadores:[{aciertos:"5", ganadores:"10", premio:"$ 36.056.515,50"}]}
   ]
 },
 {
@@ -1170,6 +1287,32 @@
   window.mostrarToast = mostrarToast;
 
   let pickerSuspendidoPorCambioTab = false;
+  let volverInicioCompartirPendiente = false;
+
+  function programarVolverInicioDespuesDeCompartir(){
+    volverInicioCompartirPendiente = true;
+    setTimeout(() => {
+      if(volverInicioCompartirPendiente){
+        try{ openTab("ultimo"); }catch(e){}
+        volverInicioCompartirPendiente = false;
+      }
+    }, 1800);
+  }
+
+  window.addEventListener("focus", () => {
+    if(volverInicioCompartirPendiente){
+      try{ openTab("ultimo"); }catch(e){}
+      volverInicioCompartirPendiente = false;
+    }
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if(!document.hidden && volverInicioCompartirPendiente){
+      try{ openTab("ultimo"); }catch(e){}
+      volverInicioCompartirPendiente = false;
+    }
+  });
+
 
   function openTab(tab){
     const modalPicker = document.getElementById("modal-picker");
@@ -1411,9 +1554,15 @@
   }
 
   function caritaResultado(ana){
-    if(ana && ana.anyConfirmed) return "😊";
+    if(ana && ana.anyConfirmed) return "🏆";
     if(ana && ana.anyPending) return "🤔";
-    return "😢";
+    return "😔";
+  }
+
+  function textoEstadoLista(ana){
+    if(ana && ana.anyConfirmed) return "Con premio en último sorteo";
+    if(ana && ana.anyPending) return "Consultar en último sorteo";
+    return "Sin premio en último sorteo";
   }
 
   function renderListaJugadas(){
@@ -1444,8 +1593,11 @@
       item.innerHTML =
         '<div class="item-main">' +
           '<div class="item-title">' + titulo + fecha + '</div>' +
-          '<div class="item-nums">' + sortNums(j.numeros).join("-") + '</div>' +
-          '<div class="item-plus">Plus ' + fmt2(j.plus) + '</div>' +
+          '<div class="item-play">' +
+            '<span class="item-nums">' + sortNums(j.numeros).join("-") + '</span>' +
+            '<span class="item-plus">Plus ' + fmt2(j.plus) + '</span>' +
+          '</div>' +
+          '<div class="item-status">' + textoEstadoLista(ana) + '</div>' +
         '</div>' +
         '<div class="item-actions">' +
           '<button class="fav-btn ' + (j.favoritoAt ? "on" : "") + '" data-fav="'+i+'" type="button" title="'+ favTitle +'">' + favTexto + '</button>' +
@@ -1511,7 +1663,8 @@
       const linea = formatoCompartirJugada(j, idx);
       if(linea) lineas.push(linea);
     });
-    return lineas.join("\n");
+    if(!lineas.length) return "";
+    return "Mis jugadas del Loto Plus:\n" + lineas.join("\n");
   }
 
   function actualizarPreviewCompartir(){
@@ -1557,7 +1710,8 @@
 
       const name = document.createElement("div");
       name.className = "share-name";
-      name.textContent = (j.nombre || ("Jugada " + (i + 1))) + (j.fecha ? " (" + j.fecha + ")" : "");
+      const favNro = numeroFavoritoPorIndice(i);
+      name.textContent = (j.nombre || ("Jugada " + (i + 1))) + (j.fecha ? " (" + j.fecha + ")" : "") + (favNro ? " ⭐" + favNro : "");
 
       const nums = document.createElement("div");
       nums.className = "share-nums";
@@ -1570,12 +1724,6 @@
 
       check.addEventListener("click", (e) => {
         e.stopPropagation();
-        if(compartirSeleccionadas.has(i)) compartirSeleccionadas.delete(i);
-        else compartirSeleccionadas.add(i);
-        renderCompartirJugadas();
-      });
-
-      row.addEventListener("click", () => {
         if(compartirSeleccionadas.has(i)) compartirSeleccionadas.delete(i);
         else compartirSeleccionadas.add(i);
         renderCompartirJugadas();
@@ -1675,10 +1823,22 @@
       return;
     }
 
+    /*
+      Método especial para AppCreator24:
+      usa el esquema oficial whatsapp://send?text=...
+      para abrir WhatsApp instalado en el celular, sin depender de WhatsApp Web.
+      Los saltos de línea se mantienen con encodeURIComponent (%0A).
+    */
     const url = "whatsapp://send?text=" + encodeURIComponent(texto);
 
     try{
       if(estado) estado.textContent = "Abriendo WhatsApp...";
+      programarVolverInicioDespuesDeCompartir();
+      try{
+        if(window.parent && window.parent !== window){
+          window.parent.postMessage({ type:"COMPARTIR_JUGADAS_WHATSAPP" }, "*");
+        }
+      }catch(_e){}
       cerrarCompartirJugadas();
     }catch(e){}
 
@@ -1836,8 +1996,10 @@
   let pickerSaveText = "Actualizar jugada";
   function renderPicker(){
     document.getElementById("picker-count").textContent = "Seleccionados: " + pickerMain.length + " / 6";
-    document.getElementById("picker-selected-balls").innerHTML = pickerMain.map(n => '<div class="ball hit">'+n+'</div>').join("");
-    document.getElementById("picker-plus-view").textContent = pickerPlus ? ("Número Plus: " + pickerPlus) : "Número Plus sin elegir";
+    const numsSeleccionados = pickerMain.map(n => '<span class="ball hit">'+fmt2(n)+'</span>').join("");
+    const plusSeleccionado = pickerPlus ? '<span class="ball plus">'+fmt2(pickerPlus)+'</span>' : "";
+    document.getElementById("picker-selected-balls").innerHTML = numsSeleccionados + plusSeleccionado;
+    document.getElementById("picker-plus-view").textContent = pickerPlus ? ("Número Plus: " + fmt2(pickerPlus)) : "Número Plus sin elegir";
     document.querySelectorAll("#picker-grid-main .num-btn").forEach(btn => {
       btn.classList.toggle("selected", pickerMain.includes(btn.dataset.n));
     });
@@ -1934,15 +2096,35 @@
   }
 
   // Modal name
-  function openNameModal(title, defaultValue, onSave){
+  function openNameModal(title, defaultValue, onSave, previewPick){
     document.getElementById("modal-name-title").textContent = title;
     const input = document.getElementById("input-name");
     input.value = defaultValue || "";
+
+    const preview = document.getElementById("name-preview");
+    const previewTitle = document.getElementById("name-preview-title");
+    if(preview && previewTitle){
+      if(previewPick && previewPick.numeros && previewPick.plus){
+        preview.innerHTML = buildBallsHTML(sortNums(previewPick.numeros), null, previewPick.plus);
+        previewTitle.style.display = "block";
+        preview.style.display = "flex";
+      }else{
+        preview.innerHTML = "";
+        previewTitle.style.display = "none";
+        preview.style.display = "none";
+      }
+    }
+
     document.getElementById("modal-name").style.display = "flex";
     setTimeout(() => { try{ input.focus(); input.select(); }catch(e){} }, 50);
     openNameModal._cb = onSave;
   }
-  function closeNameModal(){ document.getElementById("modal-name").style.display = "none"; openNameModal._cb = null; }
+  function closeNameModal(){
+    document.getElementById("modal-name").style.display = "none";
+    openNameModal._cb = null;
+    const preview = document.getElementById("name-preview");
+    if(preview) preview.innerHTML = "";
+  }
 
   function confirmar(title, text, onOk){
     document.getElementById("confirm-title").textContent = title;
@@ -1951,6 +2133,30 @@
     confirmar._cb = onOk;
   }
   function closeConfirm(){ document.getElementById("modal-confirm").style.display = "none"; confirmar._cb = null; }
+
+  function abrirModalGuardarNuevaJugada(pick, nombreSugerido){
+    if(!pick || !pick.numeros || sortNums(pick.numeros).length !== 6 || !pick.plus){
+      mostrarToast("La jugada debe tener 6 números y Plus");
+      return false;
+    }
+
+    if(jugadaYaExiste(pick)){
+      avisarJugadaDuplicada();
+      return false;
+    }
+
+    jugadaTemporal = {
+      numeros: sortNums(pick.numeros),
+      plus: fmt2(pick.plus)
+    };
+
+    openNameModal("Guardar jugada", nombreSugerido || ("Jugada " + (jugadas.length + 1)), (name) => {
+      agregarJugadaDesdePick(jugadaTemporal, name);
+      jugadaTemporal = null;
+    }, jugadaTemporal);
+
+    return true;
+  }
 
   function agregarJugadaDesdePick(pick, nombre){
     if(jugadaYaExiste(pick)){
@@ -2043,7 +2249,7 @@
 
     document.getElementById("btn-agregar-jugada").addEventListener("click", () => {
       openPicker(null, (pick) => {
-        agregarJugadaDesdePick(pick);
+        abrirModalGuardarNuevaJugada(pick, "Jugada " + (jugadas.length + 1));
       }, {manual:false});
     });
 
@@ -2099,10 +2305,7 @@
     });
     document.getElementById("btn-ruleta-guardar").addEventListener("click", () => {
       const p = window._ruletaPick || generarJugadaAleatoria();
-      jugadaTemporal = p;
-      openNameModal("Guardar jugada", "Ruleta " + (jugadas.length + 1), (name) => {
-        agregarJugadaDesdePick(jugadaTemporal, name);
-      });
+      abrirModalGuardarNuevaJugada(p, "Ruleta " + (jugadas.length + 1));
     });
 
     document.getElementById("btn-editar-cancelar").addEventListener("click", cerrarModalEditar);
@@ -2116,7 +2319,10 @@
       }, {manual:true, saveText:"Actualizar jugada"});
     });
 
-    document.getElementById("btn-name-cancel").addEventListener("click", closeNameModal);
+    document.getElementById("btn-name-cancel").addEventListener("click", () => {
+      jugadaTemporal = null;
+      closeNameModal();
+    });
     document.getElementById("btn-name-save").addEventListener("click", () => {
       const value = document.getElementById("input-name").value.trim();
       if(openNameModal._cb) openNameModal._cb(value);
