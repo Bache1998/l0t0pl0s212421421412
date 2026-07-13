@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="robots" content="noindex,nofollow,noarchive,nosnippet" />
 <title>Loto Plus</title>
 <style>
   :root{
@@ -404,15 +403,7 @@
     line-height:1.15;
     margin-bottom:2px;
   }
-    .item-play{
-    display:flex;
-    align-items:baseline;
-    gap:8px;
-    flex-wrap:nowrap;
-    white-space:nowrap;
-    overflow:hidden;
-  }
-.item-nums{
+  .item-nums{
     font-size:clamp(15px,4.6vw,18px);
     font-weight:950;
     letter-spacing:.45px;
@@ -421,14 +412,7 @@
     overflow:hidden;
     text-overflow:clip;
   }
-  .item-plus{font-size:12px;font-weight:900;color:var(--muted);line-height:1.15;margin-top:2px;white-space:nowrap}
-  .item-status{
-    font-size:13px;
-    font-weight:950;
-    color:#111!important;
-    line-height:1.2;
-    margin-top:5px;
-  }
+  .item-plus{font-size:12px;font-weight:900;color:var(--muted);line-height:1.15;margin-top:2px}
   .item-actions{
     display:flex;
     align-items:center;
@@ -539,123 +523,23 @@
   .picker-title{font-weight:900;font-size:16px}
   .picker-sub{font-size:12px;opacity:.95;margin-top:2px;font-weight:700}
   .picker-close{background:none;border:none;color:#fff;font-size:26px;line-height:1;cursor:pointer;padding:2px 6px}
-  .picker-content{padding:12px 10px 14px;flex:1;overflow:auto;-webkit-overflow-scrolling:touch}
+  .picker-content{padding:12px 10px 14px;flex:1;overflow:auto}
   .picker-selected-row{
     background:var(--card);border-radius:14px;box-shadow:var(--shadow);
-    padding:12px;margin-bottom:10px;text-align:center;
-    border:1px solid rgba(0,0,0,.10)
+    padding:12px;margin-bottom:10px;text-align:center
   }
-  body.dark .picker-selected-row{
-    background:var(--card);
-    color:var(--text);
-    border-color:rgba(255,255,255,.28);
-    box-shadow:0 6px 16px rgba(0,0,0,.9)
-  }
-  .picker-selected-title{font-size:13px;font-weight:900;margin-bottom:8px;color:var(--text)}
-  .picker-selected-balls{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    align-items:center;
-    gap:8px;
-    min-height:42px
-  }
-  .picker-selected-balls .ball{
-    min-width:36px;
-    min-height:36px;
-    padding:7px 0;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:var(--pill);
-    font-size:15px;
-    font-weight:900;
-  }
-  .picker-selected-balls .ball.hit{
-    background:var(--ok)!important;
-    color:#fff!important;
-    border:2px solid #1b5e20!important;
-    box-shadow:0 2px 6px rgba(0,0,0,.22)!important;
-  }
-  body.dark .picker-selected-balls .ball.hit{
-    background:var(--ok)!important;
-    color:#fff!important;
-    border:2px solid #ffffff!important;
-    box-shadow:0 0 0 2px rgba(46,125,50,.9),0 2px 8px rgba(0,0,0,.95)!important;
-  }
-  .picker-selected-balls .ball.plus{
-    background:#ffd54f!important;
-    color:#111!important;
-    border:2px solid #fbc02d!important;
-    box-shadow:0 2px 6px rgba(0,0,0,.22)!important;
-  }
-  body.dark .picker-selected-balls .ball.plus{
-    background:#ffd54f!important;
-    color:#111!important;
-    border:2px solid #ffffff!important;
-    box-shadow:0 0 0 2px rgba(251,192,45,.85),0 2px 8px rgba(0,0,0,.95)!important;
-  }
-  #picker-plus-view{color:var(--muted);font-weight:800}
-  body.dark #picker-plus-view,
-  body.dark #picker-count,
-  body.dark .picker-hint{
-    color:var(--text)!important;
-  }
-  .picker-grid{
-    background:var(--card);
-    border-radius:16px;
-    box-shadow:var(--shadow);
-    padding:10px;
-    margin-bottom:10px;
-    border:1px solid rgba(0,0,0,.08)
-  }
-  body.dark .picker-grid{
-    background:var(--card);
-    border-color:rgba(255,255,255,.16)
-  }
+  .picker-selected-title{font-size:13px;font-weight:900;margin-bottom:8px}
+  .picker-selected-balls{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;min-height:40px}
+  .picker-grid{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:10px;margin-bottom:10px}
   .picker-grid-inner{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
   .picker-grid-plus{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
   .num-btn{
-    border:2px solid transparent;
-    border-radius:10px;
-    padding:12px 0;
-    font-weight:900;
-    font-size:16px;
-    cursor:pointer;
-    background:#8b8b8b;
-    color:#fff;
-    box-shadow:0 2px 6px rgba(0,0,0,.18)
+    border:none;border-radius:10px;padding:14px 0;font-weight:900;font-size:16px;cursor:pointer;
+    background:#8b8b8b;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.18)
   }
-  body.dark .num-btn{
-    background:#6c6c6c;
-    color:#fff;
-    border-color:rgba(255,255,255,.10);
-    box-shadow:0 2px 6px rgba(0,0,0,.9)
-  }
-  .num-btn.selected{
-    background:var(--ok)!important;
-    color:#fff!important;
-    border-color:#1b5e20!important;
-    box-shadow:0 0 0 2px rgba(46,125,50,.28),0 2px 8px rgba(0,0,0,.25)!important
-  }
-  body.dark .num-btn.selected{
-    background:var(--ok)!important;
-    color:#fff!important;
-    border-color:#ffffff!important;
-    box-shadow:0 0 0 2px rgba(46,125,50,.95),0 2px 8px rgba(0,0,0,.95)!important
-  }
-  .num-btn.plus-btn.selected{
-    background:#fbc02d!important;
-    color:#111!important;
-    border-color:#8a6d00!important;
-    box-shadow:0 0 0 2px rgba(251,192,45,.35),0 2px 8px rgba(0,0,0,.25)!important
-  }
-  body.dark .num-btn.plus-btn.selected{
-    background:#fbc02d!important;
-    color:#111!important;
-    border-color:#ffffff!important;
-    box-shadow:0 0 0 2px rgba(251,192,45,.95),0 2px 8px rgba(0,0,0,.95)!important
-  }
+  body.dark .num-btn{background:#6c6c6c;box-shadow:0 2px 6px rgba(0,0,0,.9)}
+  .num-btn.selected{background:var(--ok);color:#fff}
+  .num-btn.plus-btn.selected{background:#fbc02d;color:#111}
   .picker-hint{text-align:center;font-size:12px;color:var(--muted);margin-top:10px;font-weight:700}
   .picker-actions{padding:10px}
   .hidden{display:none!important}
@@ -853,7 +737,9 @@
             </div>
 
             <a class="btn-add"
-               href="whatsapp://send?text=Vengo%20de%20la%20App%20del%20Loto%20Plus%2C%20me%20podr%C3%ADan%20pasar%20informaci%C3%B3n.&phone=5493873538411"
+               href="https://wa.me/5493873538411?text=Hola%2C%20me%20pueden%20pasar%20informaci%C3%B3n"
+               target="_blank"
+               rel="noopener"
                style="display:block;text-align:center;text-decoration:none;margin-top:14px">
                Contactar por WhatsApp
             </a>
@@ -898,10 +784,7 @@
 <div class="modal-overlay" id="modal-name">
   <div class="modal">
     <div class="modal-title" id="modal-name-title">Guardar jugada</div>
-    <div class="small center" style="margin-bottom:8px">Elegí un nombre para esta jugada.</div>
-    <input class="input" id="input-name" type="text" placeholder="Nombre de la jugada" maxlength="35" />
-    <div class="small center" id="name-preview-title" style="font-weight:900;margin-top:10px">Jugada seleccionada</div>
-    <div class="section-body" id="name-preview" style="margin-top:6px"></div>
+    <input class="input" id="input-name" type="text" placeholder="Nombre de la jugada" />
     <div class="modal-buttons">
       <button class="btn-modal btn-cancel" id="btn-name-cancel">Cancelar</button>
       <button class="btn-modal btn-save" id="btn-name-save">Guardar</button>
@@ -929,19 +812,19 @@
     <div class="share-head">
       <div>
         <div class="share-title">Compartir jugadas</div>
-        <div class="share-sub">Seleccioná una o varias jugadas. Las favoritas aparecen primero.</div>
+        <div class="share-sub">Seleccioná una o varias jugadas. Se enviarán una por línea, listas para mandar por WhatsApp.</div>
       </div>
       <button class="share-close" id="btn-cerrar-compartir-jugadas" type="button">✕</button>
     </div>
 
     <div class="share-tools">
       <button class="share-tool-btn" id="btn-compartir-todas-jugadas" type="button">Seleccionar todas</button>
-      <button class="share-tool-btn" id="btn-limpiar-compartir-jugadas" type="button">Quitar selección</button>
+      <button class="share-tool-btn" id="btn-limpiar-compartir-jugadas" type="button">Limpiar</button>
     </div>
 
     <div class="share-list" id="lista-compartir-jugadas"></div>
 
-    <div class="share-preview-label">Vista previa</div>
+    <div class="share-preview-label">Texto que se va a compartir</div>
     <textarea class="share-preview" id="texto-compartir-jugadas" readonly placeholder="Seleccioná una o más jugadas"></textarea>
     <div class="share-status" id="estado-compartir-jugadas"></div>
 
@@ -988,7 +871,7 @@
       <div class="picker-grid">
         <div class="small center" style="font-weight:900;margin-bottom:8px">Número Plus</div>
         <div class="picker-grid-plus" id="picker-grid-plus"></div>
-        <div class="picker-hint">Elegí un Plus del 00 al 09. Luego podrás ponerle nombre antes de guardar.</div>
+        <div class="picker-hint">Elegí un Plus del 00 al 09</div>
       </div>
     </div>
     <div class="picker-actions">
@@ -1024,23 +907,34 @@
 
   const HISTORIAL_COMPLETO = [
 {
+  fechaTexto:"11/07/2026",
+  numeroSorteo:"3899",
+  pozoAcumuladoTexto:"$ 13.434.000.000",
+  numeroPlus:"05",
+  juegos:[
+    {nombre:"Tradicional", numeros:["13","15","26","27","31","45"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 2.764.245.222"},{aciertos:"5", ganadores:"3", premio:"$ 6.373.541"},{aciertos:"4", ganadores:"287", premio:"$ 13.324"}]},
+    {nombre:"Match", numeros:["05","06","20","25","40","42"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 632.145.849"},{aciertos:"5", ganadores:"4", premio:"$ 4.780.156"},{aciertos:"4", ganadores:"242", premio:"$ 15.802"}]},
+    {nombre:"Desquite", numeros:["07","08","12","16","31","36"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.056.466.792"}]},
+    {nombre:"Sale o Sale", numeros:["12","22","23","30","32","41"], ganadores:[{aciertos:"5", ganadores:"5", premio:"$ 9.850.018"}]}
+  ]
+},
+{
   fechaTexto:"08/07/2026",
   numeroSorteo:"3898",
   pozoAcumuladoTexto:"$ 12.731.000.000",
   numeroPlus:"09",
   juegos:[
-    {nombre:"Tradicional", numeros:["05","09","22","27","38","42"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 2.688.086.611"},{aciertos:"5", ganadores:"4", premio:"$ 3.863.896"},{aciertos:"4", ganadores:"281", premio:"$ 11.000"}]},
+    {nombre:"Tradicional", numeros:["05","09","22","27","38","42"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 2.699.906.641"},{aciertos:"5", ganadores:"4", premio:"$ 3.863.896"},{aciertos:"4", ganadores:"281", premio:"$ 11.000"}]},
     {nombre:"Match", numeros:["06","09","11","22","27","44"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 555.987.238"},{aciertos:"5", ganadores:"11", premio:"$ 1.405.053"},{aciertos:"4", ganadores:"544", premio:"$ 5.682"}]},
     {nombre:"Desquite", numeros:["04","05","10","23","27","38"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 971.254.360"}]},
     {nombre:"Sale o Sale", numeros:["07","27","30","32","34","37"], ganadores:[{aciertos:"4", ganadores:"242", premio:"$ 164.503"}]}
   ]
 },
-
 {
   fechaTexto:"04/07/2026",
   numeroSorteo:"3897",
   pozoAcumuladoTexto:"$ 12.159.000.000",
-  numeroPlus:"00",
+  numeroPlus:"05",
   juegos:[
     {nombre:"Tradicional", numeros:["00","04","25","34","38","43"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 2.629.641.058"},{aciertos:"5", ganadores:"3", premio:"$ 6.560.492"},{aciertos:"4", ganadores:"130", premio:"$ 30.279"}]},
     {nombre:"Match", numeros:["02","12","19","36","39","45"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 497.541.685"},{aciertos:"5", ganadores:"6", premio:"$ 3.280.246"},{aciertos:"4", ganadores:"242", premio:"$ 16.266"}]},
@@ -1048,20 +942,18 @@
     {nombre:"Sale o Sale", numeros:["08","13","22","23","26","31"], ganadores:[{aciertos:"5", ganadores:"22", premio:"$ 2.304.305"}]}
   ]
 },
-
 {
   fechaTexto:"01/07/2026",
   numeroSorteo:"3896",
   pozoAcumuladoTexto:"$ 11.436.000.000",
   numeroPlus:"07",
   juegos:[
-    {nombre:"Tradicional", numeros:["00","11","17","23","24","33"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 2.551.064.303"},{aciertos:"5", ganadores:"8", premio:"$ 1.935.475"},{aciertos:"4", ganadores:"540", premio:"$ 5.735"}]},
-    {nombre:"Match", numeros:["15","21","31","32","41","44"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 418.964.929"},{aciertos:"5", ganadores:"2", premio:"$ 7.741.899"},{aciertos:"4", ganadores:"196", premio:"$ 15.800"}]},
+    {nombre:"Tradicional", numeros:["00","11","17","23","24","33"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 2.551.064.303"},{aciertos:"5", ganadores:"8", premio:"$ 1.935.474"},{aciertos:"4", ganadores:"540", premio:"$ 5.734"}]},
+    {nombre:"Match", numeros:["15","21","31","32","41","44"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 418.964.929"},{aciertos:"5", ganadores:"2", premio:"$ 7.741.899"},{aciertos:"4", ganadores:"196", premio:"$ 15.799"}]},
     {nombre:"Desquite", numeros:["19","23","26","33","42","45"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 817.942.686"}]},
     {nombre:"Sale o Sale", numeros:["05","09","19","21","35","42"], ganadores:[{aciertos:"6", ganadores:"1", premio:"$ 39.882.510"}]}
   ]
 },
-
 {
   fechaTexto:"27/06/2026",
   numeroSorteo:"3895",
@@ -1074,7 +966,6 @@
     {nombre:"Sale o Sale", numeros:["01","04","05","12","14","44"], ganadores:[{aciertos:"5", ganadores:"11", premio:"$ 4.793.059"}]}
   ]
 },
-
 {
   fechaTexto:"24/06/2026",
   numeroSorteo:"3894",
@@ -1087,7 +978,6 @@
     {nombre:"Sale o Sale", numeros:["17","19","28","30","32","35"], ganadores:[{aciertos:"5", ganadores:"6", premio:"$ 6.898.923"}]}
   ]
 },
-
 {
   fechaTexto:"19/06/2026",
   numeroSorteo:"3893",
@@ -1135,320 +1025,8 @@
     {nombre:"Desquite", numeros:["02","06","20","29","35","36"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 379.315.346"}]},
     {nombre:"Sale o Sale", numeros:["19","25","28","34","35","41"], ganadores:[{aciertos:"5", ganadores:"1", premio:"$ 41.262.111"}]}
   ]
-},
-{
-  fechaTexto:"06/06/2026",
-  numeroSorteo:"3889",
-  pozoAcumuladoTexto:"$ 2.098.902.592",
-  numeroPlus:"02",
-  juegos:[
-    {nombre:"Tradicional", numeros:["04","05","07","09","16","43"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 2.098.902.593"},{aciertos:"5", ganadores:"7", premio:"$ 3.058.981"},{aciertos:"4", ganadores:"597", premio:"$ 7.173"}]},
-    {nombre:"Match", numeros:["04","13","14","25","30","36"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 289.937.066"},{aciertos:"5", ganadores:"10", premio:"$ 3.794.929"},{aciertos:"4", ganadores:"488", premio:"$ 8.776"}]},
-    {nombre:"Desquite", numeros:["04","16","24","32","38","44"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 312.027.486"}]},
-    {nombre:"Sale o Sale", numeros:["18","24","27","30","34","42"], ganadores:[{aciertos:"5", ganadores:"8", premio:"$ 6.894.295"}]}
-  ]
-},
-{
-  fechaTexto:"03/06/2026",
-  numeroSorteo:"3888",
-  pozoAcumuladoTexto:"$ 7.327.000.000",
-  numeroPlus:"09",
-  juegos:[
-    {nombre:"Tradicional", numeros:["09","16","28","37","43","45"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 2.013.279.280,92"},{aciertos:"5", ganadores:"3", premio:"$ 5.512.141,80"},{aciertos:"4", ganadores:"141", premio:"$ 23.455,92"}]},
-    {nombre:"Match", numeros:["00","01","22","23","28","39"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 204.313.753,92"},{aciertos:"5", ganadores:"Vacante", premio:"$ 16.536.425,40"},{aciertos:"4", ganadores:"132", premio:"$ 25.055,19"}]},
-    {nombre:"Desquite", numeros:["16","17","20","21","25","34"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 216.225.179,20"}]},
-    {nombre:"Sale o Sale", numeros:["05","09","10","13","20","36"], ganadores:[{aciertos:"5", ganadores:"15", premio:"$ 2.839.588,20"}]}
-  ]
-},
-{
-  fechaTexto:"30/05/2026",
-  numeroSorteo:"3887",
-  pozoAcumuladoTexto:"$ 6.712.000.000",
-  numeroPlus:"07",
-  juegos:[
-    {nombre:"Tradicional", numeros:["08","16","25","31","41","45"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.948.923.109,75"},{aciertos:"5", ganadores:"6", premio:"$ 16.850.012,85"},{aciertos:"4", ganadores:"313", premio:"$ 3.370.002,57"}]},
-    {nombre:"Match", numeros:["06","11","13","18","21","22"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 139.957.582,75"},{aciertos:"5", ganadores:"38", premio:"$ 16.850.012,85"},{aciertos:"4", ganadores:"1257", premio:"$ 3.370.002,57"}]},
-    {nombre:"Desquite", numeros:["06","14","26","30","36","44"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 144.218.274,40"}]},
-    {nombre:"Sale o Sale", numeros:["01","10","17","27","33","43"], ganadores:[{aciertos:"5", ganadores:"12", premio:"$ 43.401.548,25"}]}
-  ]
-},
-{
-  fechaTexto:"27/05/2026",
-  numeroSorteo:"3886",
-  pozoAcumuladoTexto:"$ 6.093.000.000",
-  numeroPlus:"04",
-  juegos:[
-    {nombre:"Tradicional", numeros:["04","22","23","31","39","41"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.881.122.038,55"},{aciertos:"5", ganadores:"3", premio:"$ 12.036.118,05"},{aciertos:"4", ganadores:"258", premio:"$ 2.407.223,61"}]},
-    {nombre:"Match", numeros:["03","05","10","32","36","42"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 72.156.511,55"},{aciertos:"5", ganadores:"1", premio:"$ 12.036.118,05"},{aciertos:"4", ganadores:"320", premio:"$ 2.407.223,61"}]},
-    {nombre:"Desquite", numeros:["01","05","21","23","28","41"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 68.356.936,00"}]},
-    {nombre:"Sale o Sale", numeros:["02","17","23","25","39","41"], ganadores:[{aciertos:"5", ganadores:"15", premio:"$ 31.002.122,25"}]}
-  ]
-},
-{
-  fechaTexto:"23/05/2026",
-  numeroSorteo:"3885",
-  pozoAcumuladoTexto:"$ 5.881.000.000",
-  numeroPlus:"02",
-  juegos:[
-    {nombre:"Tradicional", numeros:["04","13","26","27","31","44"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.836.701.021,19"},{aciertos:"5", ganadores:"9", premio:"$ 17.851.140,45"},{aciertos:"4", ganadores:"427", premio:"$ 3.570.228,09"}]},
-    {nombre:"Match", numeros:["13","15","18","19","29","32"], ganadores:[{aciertos:"6", ganadores:"1", premio:"$ 8.764.520.426,26"},{aciertos:"5", ganadores:"13", premio:"$ 17.851.140,45"},{aciertos:"4", ganadores:"769", premio:"$ 3.570.228,09"}]},
-    {nombre:"Desquite", numeros:["13","16","18","28","32","45"], ganadores:[{aciertos:"6", ganadores:"1", premio:"$ 1.042.808.341,60"}]},
-    {nombre:"Sale o Sale", numeros:["01","05","11","32","34","43"], ganadores:[{aciertos:"5", ganadores:"6", premio:"$ 45.980.210,25"}]}
-  ]
-},
-{
-  fechaTexto:"20/05/2026",
-  numeroSorteo:"3884",
-  pozoAcumuladoTexto:"$ 34.601.000.000",
-  numeroPlus:"07",
-  juegos:[
-    {nombre:"Tradicional", numeros:["01","17","19","29","32","38"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.765.328.351,25"},{aciertos:"5", ganadores:"7", premio:"$ 13.805.243,10"},{aciertos:"4", ganadores:"379", premio:"$ 2.761.048,62"}]},
-    {nombre:"Match", numeros:["02","10","21","25","36","40"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 8.693.147.756,32"},{aciertos:"5", ganadores:"3", premio:"$ 13.805.243,10"},{aciertos:"4", ganadores:"324", premio:"$ 2.761.048,62"}]},
-    {nombre:"Desquite", numeros:["06","13","21","24","41","42"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 962.950.808,80"}]},
-    {nombre:"Sale o Sale", numeros:["19","20","34","35","40","42"], ganadores:[{aciertos:"5", ganadores:"1", premio:"$ 35.558.959,50"}]}
-  ]
-},
-{
-  fechaTexto:"16/05/2026",
-  numeroSorteo:"3883",
-  pozoAcumuladoTexto:"$ 34.090.000.000",
-  numeroPlus:"00",
-  juegos:[
-    {nombre:"Tradicional", numeros:["01","04","08","25","30","45"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.713.175.256,68"},{aciertos:"5", ganadores:"8", premio:"$ 17.699.135,85"},{aciertos:"4", ganadores:"446", premio:"$ 3.539.827,17"}]},
-    {nombre:"Match", numeros:["01","07","08","19","27","45"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 8.640.994.661,75"},{aciertos:"5", ganadores:"21", premio:"$ 17.699.135,85"},{aciertos:"4", ganadores:"680", premio:"$ 3.539.827,17"}]},
-    {nombre:"Desquite", numeros:["06","08","18","28","43","44"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 904.597.696,00"}]},
-    {nombre:"Sale o Sale", numeros:["05","11","18","20","21","42"], ganadores:[{aciertos:"5", ganadores:"13", premio:"$ 45.588.683,25"}]}
-  ]
-},
-{
-  fechaTexto:"13/05/2026",
-  numeroSorteo:"3882",
-  pozoAcumuladoTexto:"$ 33.439.000.000",
-  numeroPlus:"06",
-  juegos:[
-    {nombre:"Tradicional", numeros:["01","10","19","22","32","41"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.642.544.979,82"},{aciertos:"5", ganadores:"14", premio:"$ 13.998.411,90"},{aciertos:"4", ganadores:"611", premio:"$ 2.799.682,38"}]},
-    {nombre:"Match", numeros:["04","24","29","36","40","45"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 8.570.364.384,89"},{aciertos:"5", ganadores:"1", premio:"$ 13.998.411,90"},{aciertos:"4", ganadores:"171", premio:"$ 2.799.682,38"}]},
-    {nombre:"Desquite", numeros:["13","15","31","34","40","43"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 825.570.812,80"}]},
-    {nombre:"Sale o Sale", numeros:["03","09","11","23","26","40"], ganadores:[{aciertos:"5", ganadores:"10", premio:"$ 36.056.515,50"}]}
-  ]
-},
-{
-  fechaTexto:"09/05/2026",
-  numeroSorteo:"3881",
-  pozoAcumuladoTexto:"$ 32.921.000.000",
-  numeroPlus:"06",
-  juegos:[
-    {nombre:"Tradicional", numeros:["21","22","23","27","31","33"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.589.495.843,68"},{aciertos:"5", ganadores:"7", premio:"$ 17.563.035,60"},{aciertos:"4", ganadores:"366", premio:"$ 3.512.607,12"}]},
-    {nombre:"Match", numeros:["07","12","14","19","33","34"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 8.517.315.248,75"},{aciertos:"5", ganadores:"9", premio:"$ 17.563.035,60"},{aciertos:"4", ganadores:"1004", premio:"$ 3.512.607,12"}]},
-    {nombre:"Desquite", numeros:["04","05","06","31","37","39"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 766.215.136,00"}]},
-    {nombre:"Sale o Sale", numeros:["03","05","13","25","42","43"], ganadores:[{aciertos:"5", ganadores:"5", premio:"$ 45.238.122,00"}]}
-  ]
-},
-{
-  fechaTexto:"06/05/2026",
-  numeroSorteo:"3880",
-  pozoAcumuladoTexto:"$ 32.275.000.000",
-  numeroPlus:"06",
-  juegos:[
-    {nombre:"Tradicional", numeros:["02","20","23","27","38","41"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.519.432.168,57"},{aciertos:"5", ganadores:"5", premio:"$ 30.903.577,65"},{aciertos:"4", ganadores:"302", premio:"$ 2.788.990,38"}]},
-    {nombre:"Match", numeros:["03","05","18","28","33","36"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 8.447.251.573,64"},{aciertos:"5", ganadores:"12", premio:"$ 13.944.951,90"},{aciertos:"4", ganadores:"639", premio:"$ 2.788.990,38"}]},
-    {nombre:"Desquite", numeros:["07","27","28","34","37","45"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 687.822.212,80"}]},
-    {nombre:"Sale o Sale", numeros:["01","04","09","11","17","27"], ganadores:[{aciertos:"5", ganadores:"18", premio:"$ 35.918.815,50"}]}
-  ]
-},
-{
-  fechaTexto:"02/05/2026",
-  numeroSorteo:"3879",
-  pozoAcumuladoTexto:"$ 31.759.000.000",
-  numeroPlus:"07",
-  juegos:[
-    {nombre:"Tradicional", numeros:["23","31","32","34","40","42"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.466.352.781,49"},{aciertos:"5", ganadores:"Vacante", premio:"$ 16.958.625,75"},{aciertos:"4", ganadores:"153", premio:"$ 22.168,14"}]},
-    {nombre:"Match", numeros:["07","19","20","25","29","32"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 8.394.172.186,56"},{aciertos:"5", ganadores:"19", premio:"$ 892.559,25"},{aciertos:"4", ganadores:"866", premio:"$ 3.916,54"}]},
-    {nombre:"Desquite", numeros:["02","17","28","33","35","36"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 628.432.688,80"}]},
-    {nombre:"Sale o Sale", numeros:["03","07","09","12","23","43"], ganadores:[{aciertos:"5", ganadores:"19", premio:"$ 2.299.016,25"}]}
-  ]
-},
-{
-  fechaTexto:"29/04/2026",
-  numeroSorteo:"3878",
-  pozoAcumuladoTexto:"$ 31.135.000.000",
-  numeroPlus:"07",
-  juegos:[
-    {nombre:"Tradicional", numeros:["02","12","21","30","41","43"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.398.750.281,52"},{aciertos:"5", ganadores:"4", premio:"$ 3.395.122,09"},{aciertos:"4", ganadores:"270", premio:"$ 10.059,62"}]},
-    {nombre:"Match", numeros:["09","16","18","40","42","45"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 8.326.569.686,59"},{aciertos:"5", ganadores:"3", premio:"$ 4.526.829,45"},{aciertos:"4", ganadores:"170", premio:"$ 15.977,05"}]},
-    {nombre:"Desquite", numeros:["07","14","18","21","27","44"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 552.793.528,00"}]},
-    {nombre:"Sale o Sale", numeros:["02","10","17","28","29","36"], ganadores:[{aciertos:"5", ganadores:"17", premio:"$ 2.057.649,75"}]}
-  ]
-},
-{
-  fechaTexto:"25/04/2026",
-  numeroSorteo:"3877",
-  pozoAcumuladoTexto:"$ 30.632.000.000",
-  numeroPlus:"02",
-  juegos:[
-    {nombre:"Tradicional", numeros:["23","26","27","31","35","39"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.347.569.907,99"},{aciertos:"5", ganadores:"1", premio:"$ 17.696.329,20"},{aciertos:"4", ganadores:"231", premio:"$ 15.321,50"}]},
-    {nombre:"Match", numeros:["04","33","39","41","42","44"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 8.275.389.313,06"},{aciertos:"5", ganadores:"3", premio:"$ 5.898.776,40"},{aciertos:"4", ganadores:"191", premio:"$ 18.530,19"}]},
-    {nombre:"Desquite", numeros:["02","05","17","20","23","36"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 495.528.774,40"}]},
-    {nombre:"Sale o Sale", numeros:["13","23","25","37","41","44"], ganadores:[{aciertos:"5", ganadores:"6", premio:"$ 7.596.909,00"}]}
-  ]
-},
-{
-  fechaTexto:"22/04/2026",
-  numeroSorteo:"3876",
-  pozoAcumuladoTexto:"$ 29.982.000.000",
-  numeroPlus:"09",
-  juegos:[
-    {nombre:"Tradicional", numeros:["04","10","21","28","33","35"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.276.783.260,63"},{aciertos:"5", ganadores:"10", premio:"$ 1.360.949,04"},{aciertos:"4", ganadores:"421", premio:"$ 6.465,32"}]},
-    {nombre:"Match", numeros:["16","29","34","35","41","43"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 8.204.602.665,70"},{aciertos:"5", ganadores:"3", premio:"$ 4.536.496,80"},{aciertos:"4", ganadores:"147", premio:"$ 18.516,31"}]},
-    {nombre:"Desquite", numeros:["18","23","30","36","37","38"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 416.326.931,20"}]},
-    {nombre:"Sale o Sale", numeros:["10","11","13","21","31","40"], ganadores:[{aciertos:"5", ganadores:"9", premio:"$ 3.894.972,00"}]}
-  ]
-},
-{
-  fechaTexto:"18/04/2026",
-  numeroSorteo:"3875",
-  pozoAcumuladoTexto:"$ 29.500.000.000",
-  numeroPlus:"03",
-  juegos:[
-    {nombre:"Tradicional", numeros:["07","08","13","23","29","45"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 1.225.468.814"},{aciertos:"5", ganadores:"0", premio:"$ 0"},{aciertos:"4", ganadores:"0", premio:"$ 0"}]},
-    {nombre:"Match", numeros:["02","12","13","14","16","18"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 8.153.288.219"},{aciertos:"5", ganadores:"0", premio:"$ 0"},{aciertos:"4", ganadores:"0", premio:"$ 0"}]},
-    {nombre:"Desquite", numeros:["04","10","11","17","22","44"], ganadores:[{aciertos:"6", ganadores:"Vacante", premio:"$ 358.912.166"}]},
-    {nombre:"Sale o Sale", numeros:["09","11","21","25","39","43"], ganadores:[{aciertos:"5", ganadores:"5", premio:"$ 9.106.307"}]}
-  ]
-},
-{
-  fechaTexto:"15/04/2026",
-  numeroSorteo:"3874",
-  pozoAcumuladoTexto:"$ 28.828.000.000",
-  numeroPlus:"04",
-  juegos:[
-    {nombre:"Tradicional", numeros:["10","21","23","24","26","30"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.154.743.112,39"},{aciertos:"5", ganadores:"13", premio:"$ 1.042.795,56"},{aciertos:"4", ganadores:"323", premio:"$ 8.394,02"}]},
-    {nombre:"Match", numeros:["02","03","06","13","16","38"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 8.082.562.517,46"},{aciertos:"5", ganadores:"9", premio:"$ 1.506.260,25"},{aciertos:"4", ganadores:"373", premio:"$ 7.268,82"}]},
-    {nombre:"Desquite", numeros:["02","05","09","20","30","44"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 279.778.513,60"}]},
-    {nombre:"Sale o Sale", numeros:["01","05","13","33","38","42"], ganadores:[{aciertos:"5", ganadores:"7", premio:"$ 4.988.264,46"}]}
-  ]
-},
-    {
-      fechaTexto:"11/04/2026",
-      numeroSorteo:"3873",
-      pozoAcumuladoTexto:"$ 28.326.000.000",
-      numeroPlus:"05",
-      juegos:[
-        {nombre:"Tradicional", numeros:["12","14","25","39","41","44"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.103.691.773,48"},{aciertos:"5", ganadores:"3", premio:"$ 17.752.640,40"},{aciertos:"4", ganadores:"233", premio:"$ 3.550.528,08"}]},
-        {nombre:"Match", numeros:["07","32","34","38","39","42"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 8.031.511.178,55"},{aciertos:"5", ganadores:"1", premio:"$ 17.752.640,40"},{aciertos:"4", ganadores:"206", premio:"$ 3.550.528,08"}]},
-        {nombre:"Desquite", numeros:["00","11","15","25","34","42"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 222.658.134,40"}]},
-        {nombre:"Sale o Sale", numeros:["06","08","27","32","36","40"], ganadores:[{aciertos:"5", ganadores:"9", premio:"$ 45.726.498,00"}]}
-      ]
-    },
-    {
-      fechaTexto:"08/04/2026",
-      numeroSorteo:"3872",
-      pozoAcumuladoTexto:"$ 27.000.000.000",
-      numeroPlus:"00",
-      juegos:[
-        {nombre:"Tradicional", numeros:["01","08","12","15","27","42"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.032.732.114,71"},{aciertos:"5", ganadores:"9", premio:"$ 13.773.345,30"},{aciertos:"4", ganadores:"437", premio:"$ 2.754.669,06"}]},
-        {nombre:"Match", numeros:["05","11","19","23","39","43"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.960.551.519,78"},{aciertos:"5", ganadores:"11", premio:"$ 13.773.345,30"},{aciertos:"4", ganadores:"503", premio:"$ 2.754.669,06"}]},
-        {nombre:"Desquite", numeros:["08","23","25","33","38","40"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 143.262.712,00"}]},
-        {nombre:"Sale o Sale", numeros:["11","15","17","19","30","34"], ganadores:[{aciertos:"5", ganadores:"6", premio:"$ 35.476.798,50"}]}
-      ]
-    },
-    {
-      fechaTexto:"04/04/2026",
-      numeroSorteo:"3871",
-      pozoAcumuladoTexto:"$ 26.000.000.000",
-      numeroPlus:"08",
-      juegos:[
-        {nombre:"Tradicional", numeros:["01","12","14","15","25","31"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 979.649.735,36"},{aciertos:"5", ganadores:"4", premio:"$ 15.235.654,50"},{aciertos:"4", ganadores:"569", premio:"$ 3.047.130,90"}]},
-        {nombre:"Match", numeros:["06","09","17","26","30","37"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.907.469.140,43"},{aciertos:"5", ganadores:"11", premio:"$ 15.235.654,50"},{aciertos:"4", ganadores:"472", premio:"$ 3.047.130,90"}]},
-        {nombre:"Desquite", numeros:["02","07","14","23","24","44"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 83.869.840,00"}]},
-        {nombre:"Sale o Sale", numeros:["02","17","19","25","32","38"], ganadores:[{aciertos:"6", ganadores:"1", premio:"$ 39.243.352,50"}]}
-      ]
-    },
-    {
-      fechaTexto:"01/04/2026",
-      numeroSorteo:"3870",
-      pozoAcumuladoTexto:"$ 25.000.000.000",
-      numeroPlus:"01",
-      juegos:[
-        {nombre:"Tradicional", numeros:["02","14","17","32","38","45"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 919.605.973,01"},{aciertos:"5", ganadores:"14", premio:"$ 13.794.016,50"},{aciertos:"4", ganadores:"600", premio:"$ 2.758.803,30"}]},
-        {nombre:"Match", numeros:["06","23","26","28","33","44"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.847.425.378,08"},{aciertos:"5", ganadores:"5", premio:"$ 13.794.016,50"},{aciertos:"4", ganadores:"252", premio:"$ 2.758.803,30"}]},
-        {nombre:"Desquite", numeros:["13","21","34","40","42","45"], ganadores:[{aciertos:"6", ganadores:"1", premio:"$ 1.791.192.008,80"}]},
-        {nombre:"Sale o Sale", numeros:["11","22","25","31","34","42"], ganadores:[{aciertos:"5", ganadores:"3", premio:"$ 35.530.042,50"}]}
-      ]
-    },
-    {
-      fechaTexto:"28/03/2026",
-      numeroSorteo:"3869",
-      pozoAcumuladoTexto:"$ 24.000.000.000",
-      numeroPlus:"03",
-      juegos:[
-        {nombre:"Tradicional", numeros:["02","06","07","32","39","44"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 867.435.446,03"},{aciertos:"5", ganadores:"4", premio:"$ 17.546.641,20"},{aciertos:"4", ganadores:"446", premio:"$ 3.509.328,24"}]},
-        {nombre:"Match", numeros:["01","08","20","24","29","39"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.795.254.851,10"},{aciertos:"5", ganadores:"4", premio:"$ 17.546.641,20"},{aciertos:"4", ganadores:"406", premio:"$ 3.509.328,24"}]},
-        {nombre:"Desquite", numeros:["01","05","15","26","35","43"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.732.819.391,20"}]},
-        {nombre:"Sale o Sale", numeros:["17","22","25","29","33","41"], ganadores:[{aciertos:"5", ganadores:"22", premio:"$ 45.195.894,00"}]}
-      ]
-    },
-    {
-      fechaTexto:"25/03/2026",
-      numeroSorteo:"3868",
-      pozoAcumuladoTexto:"$ 23.000.000.000",
-      numeroPlus:"01",
-      juegos:[
-        {nombre:"Tradicional", numeros:["04","20","33","38","43","45"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 796.735.536,03"},{aciertos:"5", ganadores:"2", premio:"$ 12.312.773,55"},{aciertos:"4", ganadores:"129", premio:"$ 2.462.554,71"}]},
-        {nombre:"Match", numeros:["09","16","21","31","40","45"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.724.554.941,10"},{aciertos:"5", ganadores:"4", premio:"$ 12.312.773,55"},{aciertos:"4", ganadores:"217", premio:"$ 2.462.554,71"}]},
-        {nombre:"Desquite", numeros:["02","03","11","15","25","37"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.653.714.596,80"}]},
-        {nombre:"Sale o Sale", numeros:["07","13","17","23","37","44"], ganadores:[{aciertos:"5", ganadores:"19", premio:"$ 31.714.719,75"}]}
-      ]
-    },
-    {
-      fechaTexto:"21/03/2026",
-      numeroSorteo:"3867",
-      pozoAcumuladoTexto:"$ 22.000.000.000",
-      numeroPlus:"08",
-      juegos:[
-        {nombre:"Tradicional", numeros:["03","08","10","27","33","34"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 751.061.334,60"},{aciertos:"5", ganadores:"9", premio:"$ 17.725.732,20"},{aciertos:"4", ganadores:"661", premio:"$ 3.545.146,44"}]},
-        {nombre:"Match", numeros:["00","10","13","37","43","45"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.678.880.739,67"},{aciertos:"5", ganadores:"3", premio:"$ 17.725.732,20"},{aciertos:"4", ganadores:"165", premio:"$ 3.545.146,44"}]},
-        {nombre:"Desquite", numeros:["06","14","16","19","21","23"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.602.610.595,20"}]},
-        {nombre:"Sale o Sale", numeros:["04","07","11","22","39","45"], ganadores:[{aciertos:"5", ganadores:"24", premio:"$ 45.657.189,00"}]}
-      ]
-    },
-    {
-      fechaTexto:"18/03/2026",
-      numeroSorteo:"3866",
-      pozoAcumuladoTexto:"$ 21.000.000.000",
-      numeroPlus:"04",
-      juegos:[
-        {nombre:"Tradicional", numeros:["02","07","20","28","33","34"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 680.196.405,46"},{aciertos:"5", ganadores:"9", premio:"$ 31.619.006,10"},{aciertos:"4", ganadores:"431", premio:"$ 2.744.574,03"}]},
-        {nombre:"Match", numeros:["11","22","31","33","34","43"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.608.015.810,53"},{aciertos:"5", ganadores:"7", premio:"$ 13.722.870,15"},{aciertos:"4", ganadores:"250", premio:"$ 2.744.574,03"}]},
-        {nombre:"Desquite", numeros:["02","03","05","07","38","43"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.523.321.164,00"}]},
-        {nombre:"Sale o Sale", numeros:["01","23","27","29","34","37"], ganadores:[{aciertos:"5", ganadores:"1", premio:"$ 35.346.786,75"}]}
-      ]
-    },
-    {
-      fechaTexto:"14/03/2026",
-      numeroSorteo:"3865",
-      pozoAcumuladoTexto:"$ 20.000.000.000",
-      numeroPlus:"08",
-      juegos:[
-        {nombre:"Tradicional", numeros:["12","28","33","37","38","44"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 628.485.627,05"},{aciertos:"5", ganadores:"0", premio:"$ 17.896.135,95"},{aciertos:"4", ganadores:"234", premio:"$ 3.579.227,19"}]},
-        {nombre:"Match", numeros:["00","01","09","20","24","40"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.556.305.032,12"},{aciertos:"5", ganadores:"6", premio:"$ 17.896.135,95"},{aciertos:"4", ganadores:"267", premio:"$ 3.579.227,19"}]},
-        {nombre:"Desquite", numeros:["02","07","10","26","36","42"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.465.462.950,40"}]},
-        {nombre:"Sale o Sale", numeros:["14","19","25","30","36","41"], ganadores:[{aciertos:"5", ganadores:"13", premio:"$ 46.096.107,75"}]}
-      ]
-    },
-    {
-      fechaTexto:"11/03/2026",
-      numeroSorteo:"3864",
-      pozoAcumuladoTexto:"$ 19.000.000.000",
-      numeroPlus:"09",
-      juegos:[
-        {nombre:"Tradicional", numeros:["14","15","26","34","39","45"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 556.989.501,63"},{aciertos:"5", ganadores:"3", premio:"$ 13.970.300,85"},{aciertos:"4", ganadores:"154", premio:"$ 2.794.060,17"}]},
-        {nombre:"Match", numeros:["00","01","04","08","16","45"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 7.484.808.906,70"},{aciertos:"5", ganadores:"4", premio:"$ 13.970.300,85"},{aciertos:"4", ganadores:"255", premio:"$ 2.794.060,17"}]},
-        {nombre:"Desquite", numeros:["14","17","21","27","43","44"], ganadores:[{aciertos:"6", ganadores:"0", premio:"$ 1.385.467.285,60"}]},
-        {nombre:"Sale o Sale", numeros:["02","07","20","32","39","40"], ganadores:[{aciertos:"5", ganadores:"10", premio:"$ 35.984.108,25"}]}
-      ]
-    }
-  ];
+}
+];
 
   const ULTIMO_SORTEO = HISTORIAL_COMPLETO[0];
 
@@ -1484,32 +1062,6 @@
   window.mostrarToast = mostrarToast;
 
   let pickerSuspendidoPorCambioTab = false;
-  let volverInicioCompartirPendiente = false;
-
-  function programarVolverInicioDespuesDeCompartir(){
-    volverInicioCompartirPendiente = true;
-    setTimeout(() => {
-      if(volverInicioCompartirPendiente){
-        try{ openTab("ultimo"); }catch(e){}
-        volverInicioCompartirPendiente = false;
-      }
-    }, 1800);
-  }
-
-  window.addEventListener("focus", () => {
-    if(volverInicioCompartirPendiente){
-      try{ openTab("ultimo"); }catch(e){}
-      volverInicioCompartirPendiente = false;
-    }
-  });
-
-  document.addEventListener("visibilitychange", () => {
-    if(!document.hidden && volverInicioCompartirPendiente){
-      try{ openTab("ultimo"); }catch(e){}
-      volverInicioCompartirPendiente = false;
-    }
-  });
-
 
   function openTab(tab){
     const modalPicker = document.getElementById("modal-picker");
@@ -1751,15 +1303,9 @@
   }
 
   function caritaResultado(ana){
-    if(ana && ana.anyConfirmed) return "🏆";
+    if(ana && ana.anyConfirmed) return "😊";
     if(ana && ana.anyPending) return "🤔";
-    return "😔";
-  }
-
-  function textoEstadoLista(ana){
-    if(ana && ana.anyConfirmed) return "Con premio en último sorteo";
-    if(ana && ana.anyPending) return "Consultar en último sorteo";
-    return "Sin premio en último sorteo";
+    return "😢";
   }
 
   function renderListaJugadas(){
@@ -1790,11 +1336,8 @@
       item.innerHTML =
         '<div class="item-main">' +
           '<div class="item-title">' + titulo + fecha + '</div>' +
-          '<div class="item-play">' +
-            '<span class="item-nums">' + sortNums(j.numeros).join("-") + '</span>' +
-            '<span class="item-plus">Plus ' + fmt2(j.plus) + '</span>' +
-          '</div>' +
-          '<div class="item-status">' + textoEstadoLista(ana) + '</div>' +
+          '<div class="item-nums">' + sortNums(j.numeros).join("-") + '</div>' +
+          '<div class="item-plus">Plus ' + fmt2(j.plus) + '</div>' +
         '</div>' +
         '<div class="item-actions">' +
           '<button class="fav-btn ' + (j.favoritoAt ? "on" : "") + '" data-fav="'+i+'" type="button" title="'+ favTitle +'">' + favTexto + '</button>' +
@@ -1860,8 +1403,7 @@
       const linea = formatoCompartirJugada(j, idx);
       if(linea) lineas.push(linea);
     });
-    if(!lineas.length) return "";
-    return "Mis jugadas del Loto Plus:\n" + lineas.join("\n");
+    return lineas.join("\n");
   }
 
   function actualizarPreviewCompartir(){
@@ -1907,8 +1449,7 @@
 
       const name = document.createElement("div");
       name.className = "share-name";
-      const favNro = numeroFavoritoPorIndice(i);
-      name.textContent = (j.nombre || ("Jugada " + (i + 1))) + (j.fecha ? " (" + j.fecha + ")" : "") + (favNro ? " ⭐" + favNro : "");
+      name.textContent = (j.nombre || ("Jugada " + (i + 1))) + (j.fecha ? " (" + j.fecha + ")" : "");
 
       const nums = document.createElement("div");
       nums.className = "share-nums";
@@ -1921,6 +1462,12 @@
 
       check.addEventListener("click", (e) => {
         e.stopPropagation();
+        if(compartirSeleccionadas.has(i)) compartirSeleccionadas.delete(i);
+        else compartirSeleccionadas.add(i);
+        renderCompartirJugadas();
+      });
+
+      row.addEventListener("click", () => {
         if(compartirSeleccionadas.has(i)) compartirSeleccionadas.delete(i);
         else compartirSeleccionadas.add(i);
         renderCompartirJugadas();
@@ -2020,22 +1567,10 @@
       return;
     }
 
-    /*
-      Método especial para AppCreator24:
-      usa el esquema oficial whatsapp://send?text=...
-      para abrir WhatsApp instalado en el celular, sin depender de WhatsApp Web.
-      Los saltos de línea se mantienen con encodeURIComponent (%0A).
-    */
     const url = "whatsapp://send?text=" + encodeURIComponent(texto);
 
     try{
       if(estado) estado.textContent = "Abriendo WhatsApp...";
-      programarVolverInicioDespuesDeCompartir();
-      try{
-        if(window.parent && window.parent !== window){
-          window.parent.postMessage({ type:"COMPARTIR_JUGADAS_WHATSAPP" }, "*");
-        }
-      }catch(_e){}
       cerrarCompartirJugadas();
     }catch(e){}
 
@@ -2193,10 +1728,8 @@
   let pickerSaveText = "Actualizar jugada";
   function renderPicker(){
     document.getElementById("picker-count").textContent = "Seleccionados: " + pickerMain.length + " / 6";
-    const numsSeleccionados = pickerMain.map(n => '<span class="ball hit">'+fmt2(n)+'</span>').join("");
-    const plusSeleccionado = pickerPlus ? '<span class="ball plus">'+fmt2(pickerPlus)+'</span>' : "";
-    document.getElementById("picker-selected-balls").innerHTML = numsSeleccionados + plusSeleccionado;
-    document.getElementById("picker-plus-view").textContent = pickerPlus ? ("Número Plus: " + fmt2(pickerPlus)) : "Número Plus sin elegir";
+    document.getElementById("picker-selected-balls").innerHTML = pickerMain.map(n => '<div class="ball hit">'+n+'</div>').join("");
+    document.getElementById("picker-plus-view").textContent = pickerPlus ? ("Número Plus: " + pickerPlus) : "Número Plus sin elegir";
     document.querySelectorAll("#picker-grid-main .num-btn").forEach(btn => {
       btn.classList.toggle("selected", pickerMain.includes(btn.dataset.n));
     });
@@ -2293,35 +1826,15 @@
   }
 
   // Modal name
-  function openNameModal(title, defaultValue, onSave, previewPick){
+  function openNameModal(title, defaultValue, onSave){
     document.getElementById("modal-name-title").textContent = title;
     const input = document.getElementById("input-name");
     input.value = defaultValue || "";
-
-    const preview = document.getElementById("name-preview");
-    const previewTitle = document.getElementById("name-preview-title");
-    if(preview && previewTitle){
-      if(previewPick && previewPick.numeros && previewPick.plus){
-        preview.innerHTML = buildBallsHTML(sortNums(previewPick.numeros), null, previewPick.plus);
-        previewTitle.style.display = "block";
-        preview.style.display = "flex";
-      }else{
-        preview.innerHTML = "";
-        previewTitle.style.display = "none";
-        preview.style.display = "none";
-      }
-    }
-
     document.getElementById("modal-name").style.display = "flex";
     setTimeout(() => { try{ input.focus(); input.select(); }catch(e){} }, 50);
     openNameModal._cb = onSave;
   }
-  function closeNameModal(){
-    document.getElementById("modal-name").style.display = "none";
-    openNameModal._cb = null;
-    const preview = document.getElementById("name-preview");
-    if(preview) preview.innerHTML = "";
-  }
+  function closeNameModal(){ document.getElementById("modal-name").style.display = "none"; openNameModal._cb = null; }
 
   function confirmar(title, text, onOk){
     document.getElementById("confirm-title").textContent = title;
@@ -2330,30 +1843,6 @@
     confirmar._cb = onOk;
   }
   function closeConfirm(){ document.getElementById("modal-confirm").style.display = "none"; confirmar._cb = null; }
-
-  function abrirModalGuardarNuevaJugada(pick, nombreSugerido){
-    if(!pick || !pick.numeros || sortNums(pick.numeros).length !== 6 || !pick.plus){
-      mostrarToast("La jugada debe tener 6 números y Plus");
-      return false;
-    }
-
-    if(jugadaYaExiste(pick)){
-      avisarJugadaDuplicada();
-      return false;
-    }
-
-    jugadaTemporal = {
-      numeros: sortNums(pick.numeros),
-      plus: fmt2(pick.plus)
-    };
-
-    openNameModal("Guardar jugada", nombreSugerido || ("Jugada " + (jugadas.length + 1)), (name) => {
-      agregarJugadaDesdePick(jugadaTemporal, name);
-      jugadaTemporal = null;
-    }, jugadaTemporal);
-
-    return true;
-  }
 
   function agregarJugadaDesdePick(pick, nombre){
     if(jugadaYaExiste(pick)){
@@ -2446,7 +1935,7 @@
 
     document.getElementById("btn-agregar-jugada").addEventListener("click", () => {
       openPicker(null, (pick) => {
-        abrirModalGuardarNuevaJugada(pick, "Jugada " + (jugadas.length + 1));
+        agregarJugadaDesdePick(pick);
       }, {manual:false});
     });
 
@@ -2502,7 +1991,10 @@
     });
     document.getElementById("btn-ruleta-guardar").addEventListener("click", () => {
       const p = window._ruletaPick || generarJugadaAleatoria();
-      abrirModalGuardarNuevaJugada(p, "Ruleta " + (jugadas.length + 1));
+      jugadaTemporal = p;
+      openNameModal("Guardar jugada", "Ruleta " + (jugadas.length + 1), (name) => {
+        agregarJugadaDesdePick(jugadaTemporal, name);
+      });
     });
 
     document.getElementById("btn-editar-cancelar").addEventListener("click", cerrarModalEditar);
@@ -2516,10 +2008,7 @@
       }, {manual:true, saveText:"Actualizar jugada"});
     });
 
-    document.getElementById("btn-name-cancel").addEventListener("click", () => {
-      jugadaTemporal = null;
-      closeNameModal();
-    });
+    document.getElementById("btn-name-cancel").addEventListener("click", closeNameModal);
     document.getElementById("btn-name-save").addEventListener("click", () => {
       const value = document.getElementById("input-name").value.trim();
       if(openNameModal._cb) openNameModal._cb(value);
